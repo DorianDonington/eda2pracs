@@ -54,7 +54,6 @@ def load_topchef_data(top_chef):
         else:
             print("Invalid option, try again.")
 
-
 def add_word_dictionary(top_chef):
     word_dict = WordDictionary()
 
