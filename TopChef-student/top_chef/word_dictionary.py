@@ -13,7 +13,7 @@ class WordDictionary:
             title = line.split("\t")
             
             if title[0] != "WORD" or title[1] != "VALUE": #Capturamos el error para saber que estamos en el fichero correcto
-                raise WordDictionaryException("There is some error on the database!")
+                raise WordDictionaryException("This is not the file you are looking for!")
             else:
                 for line in fd:
                     stripped = line.strip()
