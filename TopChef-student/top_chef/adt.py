@@ -50,8 +50,11 @@ class Chefs:
         return None
 
     def add_chef(self, name, restaurant):
-        # Complete this function
-        return None
+        new_Chef = Chef(self.next, name, restaurant)
+        self.chefs[name] = new_Chef
+        chef_id = new_Chef.get_id()
+        self.next += 1
+        return chef_id
 
     def get_chef(self, id):
         # Complete this function
@@ -119,8 +122,11 @@ class Recipes:
         self.sorted_recipes = []
 
     def add_recipe(self, chef_id, name):
-        # Complete this function
-        return None
+        new_recipe = Recipe(self.next_recipe, name, chef_id)
+        self.recipes[name] = new_recipe
+        recipe_id = new_recipe.get_id()
+        self.next_recipe += 1
+        return recipe_id
 
     def get_ids(self):
         # Complete this function
@@ -193,8 +199,10 @@ class Reviews:
         self.sorted_reviews = []
 
     def add_review(self, rec_id, review):
-        # Complete this function
-        return None
+        new_review = Review(self.next_review, review, rec_id)
+        self.reviews[review] = new_review
+        self.next_review += 1
+        return new_review.get_id()
 
     def get_ids(self):
         # Complete this function
@@ -242,8 +250,51 @@ class TopChef:
         self.reviews = Reviews()
 
     def load_data(self, path):
-        # Complete this function
-        pass
+        """
+        Funcion que se encarda de generar informaciones de chefs.
+        En caso de que archivo que recibimos tiene formato correcto lanza un mensaje de error.
+        :param path: Direccion de archivo de inforacioens de chefs
+        """
+        # Definir palabras clave.
+        CHEF = "CHEF"
+        COURSE = "COURSE"
+
+        # Abrir fichero para modificar.
+        try:
+            fb = open(path, "r")
+        except:
+            raise TopChefException("File not exist. ")
+        #  Guarda todas las lineas de fichero en una lista
+        fb_contents = fb.readlines()
+
+        # Decidido usando bucle while, porque necesito leer siguiente linea para comprobar si contiene los palabra clave que necesitamos.
+        line = 0
+        # bucle hasta termina de leer todos los contenidos de fichero.
+        # Comprobar los palabras claves para identificar lineas.
+        while line < len(fb_contents)-1:
+            # Cuando detecta linea de CHEFS, guarda su palabra clave, nombre de chef y nombre de restaurante.
+            if CHEF in fb_contents[line]:
+                CHEF, name, restaurant = fb_contents[line].strip().split("\t")
+                chef_id = self.chefs.add_chef(name, restaurant)
+            # Cuando detecta linea de recetas, guarda palabra clave y nombre de recetas.
+                while COURSE in fb_contents[line+1]:
+                    line += 1
+                    COURSE, recipe = fb_contents[line].strip().split("\t")
+                    recipr_id = self.recipes.add_recipe(chef_id, recipe)
+                    # Prueba de leer siguiente linea, Si no es linea con palabras claves es linea de opiniones.
+                    try:
+                        while (COURSE not in fb_contents[line+1]) and (CHEF not in fb_contents[line+1]):
+                            review = fb_contents[line+1].strip()
+                            review_id = self.reviews.add_review(recipr_id, review)
+                            line += 1
+                    except:
+                        break
+            else:
+                raise TopChefException("Invalid File. ")
+
+            line += 1
+
+        print("Completed. ")
 
     def clear(self):
         # Complete this function
