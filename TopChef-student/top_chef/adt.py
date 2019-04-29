@@ -50,10 +50,21 @@ class Chefs:
         return None
 
     def add_chef(self, name, restaurant):
+        """
+        Funcion que se encarga de generar un nuevo chef y añadirlo al direccionario
+        :param name: nombre de chef
+        :param restaurant: nombre de restaurante
+        :return: id de nuevo chef generado .
+        """
+        # Genera un nueva instancia chef
         new_Chef = Chef(self.next, name, restaurant)
-        self.chefs[name] = new_Chef
+        # Consultar id de nuevo chef
         chef_id = new_Chef.get_id()
+        # Gudarda nuevo chef al diccionario
+        self.chefs[chef_id] = new_Chef
+        # incrementa contador de ids.
         self.next += 1
+        # Devuelve chef_id
         return chef_id
 
     def get_chef(self, id):
@@ -122,10 +133,21 @@ class Recipes:
         self.sorted_recipes = []
 
     def add_recipe(self, chef_id, name):
+        """
+        Funcion que se encarga de generar nuevo receta y añadirlo al diccionario recipes.
+        :param chef_id: id del chef
+        :param name: nombre de receta
+        :return: id de nueva receta generado.
+        """
+        # Genera nueva instancia de recipe y consultar su id.
         new_recipe = Recipe(self.next_recipe, name, chef_id)
-        self.recipes[name] = new_recipe
         recipe_id = new_recipe.get_id()
+
+        # Guardar nueva recipe a diccionario de recipes.
+        self.recipes[recipe_id] = new_recipe
+        # Incrementa id de recipe.
         self.next_recipe += 1
+        # Devuelve id de nueva recipe.
         return recipe_id
 
     def get_ids(self):
@@ -199,10 +221,21 @@ class Reviews:
         self.sorted_reviews = []
 
     def add_review(self, rec_id, review):
+        """
+        Funcion que se encarga generar nueva review con informaciones que tenemos y añadirlo a diccionario Reviews.
+        :param rec_id: id de recipe.
+        :param review: string de review.
+        :return: id de nueva review generado.
+        """
+        # Generar nueva review y consutal su id.
         new_review = Review(self.next_review, review, rec_id)
-        self.reviews[review] = new_review
+        review_id = new_review.get_id()
+        # Añadir nueva review a diccionario de reviews.
+        self.reviews[review_id] = new_review
+        # Incrementa id de review.
         self.next_review += 1
-        return new_review.get_id()
+        # devuelve id de review.
+        return review_id
 
     def get_ids(self):
         # Complete this function
@@ -264,6 +297,7 @@ class TopChef:
             fb = open(path, "r")
         except:
             raise TopChefException("File not exist. ")
+
         #  Guarda todas las lineas de fichero en una lista
         fb_contents = fb.readlines()
 
