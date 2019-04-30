@@ -285,9 +285,8 @@ class TopChef:
 
     def load_data(self, path):
         """
-        Funcion que se encarda de generar informaciones de chefs.
-        En caso de que archivo que recibimos tiene formato correcto lanza un mensaje de error.
-        :param path: Direccion de archivo de inforacioens de chefs
+        Funcion que se encarga de generar informaciones de chefs.
+        :param path: Direccion de archivo de chefs
         """
         # Definir palabras clave.
         CHEF = "CHEF"
@@ -295,32 +294,32 @@ class TopChef:
         TAB = "\t"
         CONTROL = False
 
-        with open(path) as fd:
+        with open(path) as fd: 
             for line in fd:
                 if not CONTROL and CHEF in line:
-                    CONTROL = True
+                    CONTROL = True #Controlamos si estamos en el fivhero correcto o no
 
                 if CHEF in line and CONTROL:
-                    stripped = line.strip()
-                    chef_data = stripped.split(TAB)
-                    chef_name = chef_data[1]
-                    chef_restaurant = chef_data[2]
-                    current_chef_id = self.chefs.add_chef(chef_name,chef_restaurant)
-                    continue
+                    stripped = line.strip() #Eliminamos el \n del final de la línea
+                    chef_data = stripped.split(TAB) #Separamos el texto por \t 
+                    chef_name = chef_data[1] #La primera palabra es el chef
+                    chef_restaurant = chef_data[2] #La segunda palabra es el restaurante
+                    current_chef_id = self.chefs.add_chef(chef_name,chef_restaurant) 
+                    continue #Siguiente linea!
                 
                 elif COURSE in line and CONTROL:
-                    stripped = line.strip()
-                    recipe = stripped.replace(COURSE+TAB,"")
+                    stripped = line.strip() #Eliminamos el \n
+                    recipe = stripped.replace(COURSE+TAB,"") #Eliminamos la palabra COURSE para quedarnos con el resto
                     current_recipe_id = self.recipes.add_recipe(current_chef_id,recipe)
                     continue
 
                 elif CONTROL:
-                    line = line.strip()
-                    review = line.translate(str.maketrans('', '', string.punctuation)).lower()
+                    line = line.strip() #Eliminamos \n
+                    review = line.translate(str.maketrans('', '', string.punctuation)).lower() #Eliminamos símbolos de puntuación y ponemos todo en minus
                     self.reviews.add_review(current_recipe_id, review)
                 
                 else:
-                    raise TopChefException("Wrong file!")
+                    raise TopChefException("Wrong file!") #Control de errores de fichero correcto
         
     def clear(self):
         # Complete this function
