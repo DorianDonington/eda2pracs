@@ -1,3 +1,4 @@
+import string
 class TopChefException(Exception):
     pass
 
@@ -314,7 +315,8 @@ class TopChef:
                     continue
 
                 elif CONTROL:
-                    review = line.strip()
+                    line = line.strip()
+                    review = line.translate(str.maketrans('', '', string.punctuation)).lower()
                     self.reviews.add_review(current_recipe_id, review)
                 
                 else:
