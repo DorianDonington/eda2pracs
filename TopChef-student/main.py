@@ -59,7 +59,7 @@ def add_word_dictionary(top_chef):
 
     print("select your file")
 
-    foder_name = "data"
+    foder_name = "TopChef-student/data"
     file_list = os.listdir(foder_name)
 
     for idx, filename in enumerate(file_list):
