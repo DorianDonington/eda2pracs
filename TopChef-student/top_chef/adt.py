@@ -291,45 +291,26 @@ class TopChef:
         # Definir palabras clave.
         CHEF = "CHEF"
         COURSE = "COURSE"
+        TAB = "\t"
 
-        # Abrir fichero para modificar.
-        try:
-            fb = open(path, "r")
-        except:
-            raise TopChefException("File not exist. ")
+        with open(path) as fd:
+            for line in fd:
+                if CHEF in line:
+                    stripped = line.strip()
+                    chef_data = stripped.split(TAB)
+                    chef_name = chef_data[1]
+                    chef_restaurant = chef_data[2]
+                    current_chef_id = self.chefs.add_chef(chef_name,chef_restaurant)
+                
+                elif COURSE in line:
+                    stripped = line.strip()
+                    recipe = stripped.replace(COURSE+TAB,"")
+                    current_recipe_id = self.recipes.add_recipe(current_chef_id,recipe)  
 
-        #  Guarda todas las lineas de fichero en una lista
-        fb_contents = fb.readlines()
-
-        # Decidido usando bucle while, porque necesito leer siguiente linea para comprobar si contiene los palabra clave que necesitamos.
-        line = 0
-        # bucle hasta termina de leer todos los contenidos de fichero.
-        # Comprobar los palabras claves para identificar lineas.
-        while line < len(fb_contents)-1:
-            # Cuando detecta linea de CHEFS, guarda su palabra clave, nombre de chef y nombre de restaurante.
-            if CHEF in fb_contents[line]:
-                CHEF, name, restaurant = fb_contents[line].strip().split("\t")
-                chef_id = self.chefs.add_chef(name, restaurant)
-            # Cuando detecta linea de recetas, guarda palabra clave y nombre de recetas.
-                while COURSE in fb_contents[line+1]:
-                    line += 1
-                    COURSE, recipe = fb_contents[line].strip().split("\t")
-                    recipr_id = self.recipes.add_recipe(chef_id, recipe)
-                    # Prueba de leer siguiente linea, Si no es linea con palabras claves es linea de opiniones.
-                    try:
-                        while (COURSE not in fb_contents[line+1]) and (CHEF not in fb_contents[line+1]):
-                            review = fb_contents[line+1].strip()
-                            review_id = self.reviews.add_review(recipr_id, review)
-                            line += 1
-                    except:
-                        break
-            else:
-                raise TopChefException("Invalid File. ")
-
-            line += 1
-
-        print("Completed. ")
-
+                else:
+                    review = line.strip()
+                    review_id = self.reviews.add_review(current_recipe_id, review)
+        
     def clear(self):
         # Complete this function
         pass
