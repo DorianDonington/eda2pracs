@@ -297,7 +297,7 @@ class TopChef:
         with open(path) as fd: 
             for line in fd:
                 if not CONTROL and CHEF in line:
-                    CONTROL = True #Controlamos si estamos en el fivhero correcto o no
+                    CONTROL = True #Controlamos si estamos en el fichero correcto o no
 
                 if CHEF in line and CONTROL:
                     stripped = line.strip() #Eliminamos el \n del final de la línea
@@ -343,10 +343,9 @@ class TopChef:
         self.compute_chefs_score()
 
     def compute_reviews_score(self, word_dict):
-        # Complete this function
 
         for rev_id in self.reviews.get_ids():
-            continue
+            current_recipe = 
 
         self.normalize_reviews_scores()
 
