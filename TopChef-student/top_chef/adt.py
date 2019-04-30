@@ -43,12 +43,19 @@ class Chefs:
         self.sorted_chefs = []
 
     def exists(self, id):
-        # Complete this function
-        return False
+        """
+        Checks if the chef exist inside the dictionary by sorting it from his id
+        :param id: chef id inputed by the user
+        :return: boolean; if the chef exists, return True, else, return False
+        """
+        return id in self.get_ids()
 
     def get_ids(self):
-        # Complete this function
-        return None
+        """
+        Give the user the listed ids for every chef
+        :return: a list of ids
+        """
+        return self.chefs.keys()
 
     def add_chef(self, name, restaurant):
         """
@@ -69,20 +76,33 @@ class Chefs:
         return chef_id
 
     def get_chef(self, id):
-        # Complete this function
-        return None
+        """
+        Search for the chef by the input id, raise a TopChefException if the is no such id inside the dictionary.
+        :param id: chef id input by the user.
+        :return: the chef asked for.
+        """
+        if self.exists(id):
+            return self.chefs[id]
+        else:
+            raise TopChefException("There is no chef assigned to that id")
 
     def is_sorted(self):
         # Complete this function
+        #Necesito saber la puntuacion de cada chef
         return False
 
     def sort_chefs(self):
         # Complete this function
+        #Lo mismo que la funcion de arriba!
         pass
 
     def get_top_n(self, n=1):
-        # Complete this function
-        return None
+        """
+        Returns the list of top chefs
+        :param n: The number of top chefs you want to check
+        :return: The list, sorted by the number of tops you want to check
+        """
+        return self.sorted_chefs[0:n]
 
     def __str__(self):
         # Complete this function
@@ -90,8 +110,11 @@ class Chefs:
         return chefs_str
 
     def __len__(self):
-        # Complete this function
-        return None
+        """
+        Prints the number of chefs that are inside the dictionary
+        :return: the number of chefs, in a int type.
+        """
+        return len(self.chefs.keys())
 
 # Structure to hold a recipe
 class Recipe:
@@ -152,28 +175,48 @@ class Recipes:
         return recipe_id
 
     def get_ids(self):
-        # Complete this function
-        return None
+        """
+        Get a list of recipes ids
+        :return: a list of every recipe id
+        """
+        return self.recipes.keys()
 
     def exists(self, id):
-        # Complete this function
-        return False
+        """
+        Checks if the recipe exists in the recipes dictionary
+        :param id: The id input by the user
+        :return: a boolean; True if the id exists, False if it does not exist
+        """
+        return id in self.get_ids()
 
     def get_recipe(self, recipe_id):
-        # Complete this function
-        return None
+        """
+        Gives the user the recipe it is looking for, raise a TopChefException if there is no such id.
+        :param recipe_id: id input by the user
+        :return: the recipe the user looks for.
+        """
+        if self.exists(recipe_id):
+            return self.recipes[recipe_id]
+        else:
+            raise TopChefException("There is no recipe assigned to that id!")
 
     def is_sorted(self):
         # Complete this function
+        #Me faltan las puntuaciones
         return False
 
     def sort_recipes(self):
         # Complete this function
+        #Me faltan las puntuaciones
         pass
 
     def get_top_n(self, n=1):
-        # Complete this function
-        return None
+        """
+        Gives the user a list with the top chefs.
+        :param n: The number of top recipes that the user wants to check
+        :return: a list of the top recipes.
+        """
+        return self.sorted_recipes[0:n]
 
     def __str__(self):
         # Complete this function
@@ -181,8 +224,11 @@ class Recipes:
         return rec_str
 
     def __len__(self):
-        # Complete this function
-        return None
+        """
+        Gives the user a int type with the number of recipes inside the dictionary.
+        :return: the number of recipes inside the dictionary
+        """
+        return len(self.recipes.keys())
 
 # Structure to hold a review
 class Review:
@@ -239,36 +285,58 @@ class Reviews:
         return review_id
 
     def get_ids(self):
-        # Complete this function
-        return None
+        """
+        Gives the user a list of ids to check for
+        :return: a list of ids
+        """
+        return self.reviews.keys()
 
     def exists(self, id):
-        # Complete this function
-        return False
+        """
+        Checks if the id exists inside the dictionary
+        :param id: the id input by the user to check if it exists
+        :return: boolean type, True if it does exist, False if it doesn't exist.
+        """
+        return id in  self.get_ids()
 
     def get_review(self,rev_id):
-        # Complete this function
-        return None
+        """
+        Gives the user the requested review, raise a TopChefException if there is no such id inside the dictionary
+        :param rev_id: the id for the requested review input by the user
+        :return: the review assigned to that id.
+        """
+        if self.exists(rev_id):
+            return self.reviews[rev_id]
+        else:
+            raise TopChefException("There is no such review assigned to that id")
 
     def min_score(self):
         # Complete this function
+        #Necesito saber el tema puntuaciones.
         return None
 
     def max_score(self):
         # Complete this function
+        #Necesito saber el tema puntuaciones.
         return None
 
     def is_sorted(self):
         # Complete this function
+        #Necesito saber el tema puntuaciones.
         return False
 
     def sort_reviews(self):
         # Complete this function
+        #Necesito saber el tema puntuaciones.
         pass
 
     def get_top_n(self, n=1):
-        # Complete this function
-        return None
+        """
+        Gives the user the listed top reviews by looking at the number input by the user.
+        :param n: the number of top reviews the user wants to check for.
+        :return: a list of reviews.
+        """
+        return self.sorted_reviews[0:n]
 
     def __str__(self):
         # Complete this function

@@ -1,6 +1,7 @@
 class WordDictionaryException(Exception):
     pass
 
+
 class WordDictionary:
 
     def __init__(self):
