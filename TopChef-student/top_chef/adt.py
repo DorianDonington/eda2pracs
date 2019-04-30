@@ -292,24 +292,33 @@ class TopChef:
         CHEF = "CHEF"
         COURSE = "COURSE"
         TAB = "\t"
+        CONTROL = False
 
         with open(path) as fd:
             for line in fd:
-                if CHEF in line:
+                if not CONTROL and CHEF in line:
+                    CONTROL = True
+
+                if CHEF in line and CONTROL:
                     stripped = line.strip()
                     chef_data = stripped.split(TAB)
                     chef_name = chef_data[1]
                     chef_restaurant = chef_data[2]
                     current_chef_id = self.chefs.add_chef(chef_name,chef_restaurant)
+                    continue
                 
-                elif COURSE in line:
+                elif COURSE in line and CONTROL:
                     stripped = line.strip()
                     recipe = stripped.replace(COURSE+TAB,"")
-                    current_recipe_id = self.recipes.add_recipe(current_chef_id,recipe)  
+                    current_recipe_id = self.recipes.add_recipe(current_chef_id,recipe)
+                    continue
 
-                else:
+                elif CONTROL:
                     review = line.strip()
-                    review_id = self.reviews.add_review(current_recipe_id, review)
+                    self.reviews.add_review(current_recipe_id, review)
+                
+                else:
+                    raise TopChefException("Wrong file!")
         
     def clear(self):
         # Complete this function
