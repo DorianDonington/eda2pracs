@@ -50,8 +50,22 @@ class Chefs:
         return None
 
     def add_chef(self, name, restaurant):
-        # Complete this function
-        return None
+        """
+        Funcion que se encarga de generar un nuevo chef y añadirlo al direccionario
+        :param name: nombre de chef
+        :param restaurant: nombre de restaurante
+        :return: id de nuevo chef generado .
+        """
+        # Genera un nueva instancia chef
+        new_Chef = Chef(self.next, name, restaurant)
+        # Consultar id de nuevo chef
+        chef_id = new_Chef.get_id()
+        # Gudarda nuevo chef al diccionario
+        self.chefs[chef_id] = new_Chef
+        # incrementa contador de ids.
+        self.next += 1
+        # Devuelve chef_id
+        return chef_id
 
     def get_chef(self, id):
         # Complete this function
@@ -119,8 +133,22 @@ class Recipes:
         self.sorted_recipes = []
 
     def add_recipe(self, chef_id, name):
-        # Complete this function
-        return None
+        """
+        Funcion que se encarga de generar nuevo receta y añadirlo al diccionario recipes.
+        :param chef_id: id del chef
+        :param name: nombre de receta
+        :return: id de nueva receta generado.
+        """
+        # Genera nueva instancia de recipe y consultar su id.
+        new_recipe = Recipe(self.next_recipe, name, chef_id)
+        recipe_id = new_recipe.get_id()
+
+        # Guardar nueva recipe a diccionario de recipes.
+        self.recipes[recipe_id] = new_recipe
+        # Incrementa id de recipe.
+        self.next_recipe += 1
+        # Devuelve id de nueva recipe.
+        return recipe_id
 
     def get_ids(self):
         # Complete this function
@@ -193,8 +221,21 @@ class Reviews:
         self.sorted_reviews = []
 
     def add_review(self, rec_id, review):
-        # Complete this function
-        return None
+        """
+        Funcion que se encarga generar nueva review con informaciones que tenemos y añadirlo a diccionario Reviews.
+        :param rec_id: id de recipe.
+        :param review: string de review.
+        :return: id de nueva review generado.
+        """
+        # Generar nueva review y consutal su id.
+        new_review = Review(self.next_review, review, rec_id)
+        review_id = new_review.get_id()
+        # Añadir nueva review a diccionario de reviews.
+        self.reviews[review_id] = new_review
+        # Incrementa id de review.
+        self.next_review += 1
+        # devuelve id de review.
+        return review_id
 
     def get_ids(self):
         # Complete this function
@@ -242,8 +283,52 @@ class TopChef:
         self.reviews = Reviews()
 
     def load_data(self, path):
-        # Complete this function
-        pass
+        """
+        Funcion que se encarda de generar informaciones de chefs.
+        En caso de que archivo que recibimos tiene formato correcto lanza un mensaje de error.
+        :param path: Direccion de archivo de inforacioens de chefs
+        """
+        # Definir palabras clave.
+        CHEF = "CHEF"
+        COURSE = "COURSE"
+
+        # Abrir fichero para modificar.
+        try:
+            fb = open(path, "r")
+        except:
+            raise TopChefException("File not exist. ")
+
+        #  Guarda todas las lineas de fichero en una lista
+        fb_contents = fb.readlines()
+
+        # Decidido usando bucle while, porque necesito leer siguiente linea para comprobar si contiene los palabra clave que necesitamos.
+        line = 0
+        # bucle hasta termina de leer todos los contenidos de fichero.
+        # Comprobar los palabras claves para identificar lineas.
+        while line < len(fb_contents)-1:
+            # Cuando detecta linea de CHEFS, guarda su palabra clave, nombre de chef y nombre de restaurante.
+            if CHEF in fb_contents[line]:
+                CHEF, name, restaurant = fb_contents[line].strip().split("\t")
+                chef_id = self.chefs.add_chef(name, restaurant)
+            # Cuando detecta linea de recetas, guarda palabra clave y nombre de recetas.
+                while COURSE in fb_contents[line+1]:
+                    line += 1
+                    COURSE, recipe = fb_contents[line].strip().split("\t")
+                    recipr_id = self.recipes.add_recipe(chef_id, recipe)
+                    # Prueba de leer siguiente linea, Si no es linea con palabras claves es linea de opiniones.
+                    try:
+                        while (COURSE not in fb_contents[line+1]) and (CHEF not in fb_contents[line+1]):
+                            review = fb_contents[line+1].strip()
+                            review_id = self.reviews.add_review(recipr_id, review)
+                            line += 1
+                    except:
+                        break
+            else:
+                raise TopChefException("Invalid File. ")
+
+            line += 1
+
+        print("Completed. ")
 
     def clear(self):
         # Complete this function

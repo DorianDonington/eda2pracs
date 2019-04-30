@@ -7,12 +7,20 @@ class WordDictionary:
         self.words = {}
 
     def load_words(self, word_path):
-         
+        """
+        Lee el documento words.txt y carga en el self.words todas las palabras clave que encuentre con su valor. Captura errores si no estamos en el 
+        fichero correcto, si hay errores de formato y si el segundo ítem de una línea no es un número
+        :param word_path: El path del fichero words.txt
+        """
+
+        KEYWORD1 = "WORD"
+        KEYWORD2 = "VALUE"
+
         with open(word_path) as fd:
             line = fd.readline().strip()
             title = line.split("\t")
             
-            if title[0] != "WORD" or title[1] != "VALUE": #Capturamos el error para saber que estamos en el fichero correcto
+            if title[0] != KEYWORD1 or title[1] != KEYWORD2 : #Capturamos el error para saber que estamos en el fichero correcto
                 raise WordDictionaryException("This is not the file you are looking for!")
             else:
                 for line in fd:
@@ -26,15 +34,12 @@ class WordDictionary:
                         if not self.exists(word[0]): 
                             self.add_word(word[0],float(word[1]))
                         else: 
-                            #Capturamos el error de palabras repetidas por si queremos capturar el error
+                            #Capturamos el caso de palabras repetidas por si queremos capturar el error en el futuro
                             self.add_word(word[0],float(word[1]))
 
                     except ValueError: #Capturamos el error de que la segunda palabra no sea un número
                         raise WordDictionaryException("There is some error on the database!")
                   
-                    
-                    
-
     def add_word(self, word, value):
         self.words[word] = value
 
