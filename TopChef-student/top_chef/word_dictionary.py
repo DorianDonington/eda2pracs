@@ -45,8 +45,10 @@ class WordDictionary:
         self.words[word] = value
 
     def exists(self, word):
-        return word in self.words
-
+        if word in self.words:
+            return True
+        return False
+        
     def get_value(self, word):
         return self.words[word]
 
