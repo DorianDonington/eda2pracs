@@ -357,7 +357,6 @@ class Reviews:
             rev_str+= "\n"
         return rev_str
 
-
 class TopChef:
 
     def __init__(self):
