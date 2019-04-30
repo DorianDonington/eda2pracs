@@ -318,15 +318,19 @@ class Reviews:
         else:
             raise TopChefException("There is no such review assigned to that id")
 
+    def array_scores(self):
+
+        scores =[]
+        for rev_id in self.get_ids():
+            review = self.reviews[rev_id]
+            scores.append(review.get_score())
+        return scores
+
     def min_score(self):
-        # Complete this function
-        #Necesito saber el tema puntuaciones.
-        return None
+        return min(self.array_scores())
 
     def max_score(self):
-        # Complete this function
-        #Necesito saber el tema puntuaciones.
-        return None
+        return max(self.array_scores())
 
     def is_sorted(self):
         # Complete this function
@@ -425,12 +429,13 @@ class TopChef:
         for rev_id in self.reviews.get_ids():
             suma = 0
             review = self.reviews.get_review(rev_id)
-            splitted = review.get_review().split()
-            for word in splitted:
+            raw_data = review.get_review().split()
+            for word in raw_data:
                 if word_dict.exists(word):
-                    suma += word_dict.get_value(word)
+                    word_score = word_dict.get_value(word)
+                    suma += word_score
             
-            review.set_score(suma)
+            review.set_score(round(suma,2))
 
 
         self.normalize_reviews_scores()
