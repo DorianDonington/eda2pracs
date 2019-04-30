@@ -419,10 +419,19 @@ class TopChef:
 
     def compute_reviews_score(self, word_dict):
         
+        if len(self.chefs)==0:
+            raise TopChefException("No data yet!")
+
         for rev_id in self.reviews.get_ids():
-            words = self.reviews[rev_id].split()
-                for word in words:
-                    if word in word_dict
+            suma = 0
+            review = self.reviews.get_review(rev_id)
+            splitted = review.get_review().split()
+            for word in splitted:
+                if word_dict.exists(word):
+                    suma += word_dict.get_value(word)
+            
+            review.set_score(suma)
+
 
         self.normalize_reviews_scores()
 
