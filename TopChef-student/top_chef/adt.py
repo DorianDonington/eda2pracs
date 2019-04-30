@@ -1,4 +1,5 @@
 import string
+
 class TopChefException(Exception):
     pass
 
@@ -62,7 +63,7 @@ class Chefs:
         Funcion que se encarga de generar un nuevo chef y añadirlo al direccionario
         :param name: nombre de chef
         :param restaurant: nombre de restaurante
-        :return: id de nuevo chef generado .
+        :return: id de nuevo chef generado.
         """
         # Genera un nueva instancia chef
         new_Chef = Chef(self.next, name, restaurant)
@@ -102,11 +103,16 @@ class Chefs:
         :param n: The number of top chefs you want to check
         :return: The list, sorted by the number of tops you want to check
         """
+        if n > self.next:
+            raise TopChefException("There is only %s chefs!" %(self.next))
         return self.sorted_chefs[0:n]
 
     def __str__(self):
-        # Complete this function
         chefs_str = ""
+        for chef in self.get_ids():
+            chefs_str+= self.chefs[chef].__str__()
+            chefs_str+= "\n"
+                
         return chefs_str
 
     def __len__(self):
@@ -212,15 +218,17 @@ class Recipes:
 
     def get_top_n(self, n=1):
         """
-        Gives the user a list with the top chefs.
+        Gives the user a list with the top recipes.
         :param n: The number of top recipes that the user wants to check
         :return: a list of the top recipes.
         """
         return self.sorted_recipes[0:n]
 
     def __str__(self):
-        # Complete this function
         rec_str = ""
+        for recipe in self.get_ids():
+            rec_str+= self.recipes[recipe].__str__()
+            rec_str+= "\n"
         return rec_str
 
     def __len__(self):
@@ -339,8 +347,10 @@ class Reviews:
         return self.sorted_reviews[0:n]
 
     def __str__(self):
-        # Complete this function
         rev_str = ""
+        for review in self.get_ids():
+            rev_str+= self.reviews[review].__str__()
+            rev_str+= "\n"
         return rev_str
 
 
@@ -372,38 +382,35 @@ class TopChef:
                     chef_data = stripped.split(TAB) #Separamos el texto por \t 
                     chef_name = chef_data[1] #La primera palabra es el chef
                     chef_restaurant = chef_data[2] #La segunda palabra es el restaurante
-                    current_chef_id = self.chefs.add_chef(chef_name,chef_restaurant) 
+                    current_chef_id = self.add_chef(chef_name,chef_restaurant) 
                     continue #Siguiente linea!
                 
                 elif COURSE in line and CONTROL:
                     stripped = line.strip() #Eliminamos el \n
                     recipe = stripped.replace(COURSE+TAB,"") #Eliminamos la palabra COURSE para quedarnos con el resto
-                    current_recipe_id = self.recipes.add_recipe(current_chef_id,recipe)
+                    current_recipe_id = self.add_recipe(current_chef_id,recipe)
                     continue
 
                 elif CONTROL:
                     line = line.strip() #Eliminamos \n
                     review = line.translate(str.maketrans('', '', string.punctuation)).lower() #Eliminamos símbolos de puntuación y ponemos todo en minus
-                    self.reviews.add_review(current_recipe_id, review)
+                    self.add_review(current_recipe_id, review)
                 
                 else:
+                    self.clear() #Errores? Borramos todo
                     raise TopChefException("Wrong file!") #Control de errores de fichero correcto
         
     def clear(self):
-        # Complete this function
-        pass
+        self.__init__()
 
     def add_chef(self, name, rest):
-        # Complete this function
-        return None
-
+        return self.chefs.add_chef(name, rest)
+        
     def add_recipe(self, id_chef, name):
-        # Complete this function
-        return None
+        return self.recipes.add_recipe(id_chef, name)
 
     def add_review(self, id_rev,review):
-        # Complete this function
-        return None
+        return self.reviews.add_review(id_rev,review)
 
     def compute_scores(self, word_dict):
         self.compute_reviews_score(word_dict)
@@ -411,9 +418,11 @@ class TopChef:
         self.compute_chefs_score()
 
     def compute_reviews_score(self, word_dict):
-
+        
         for rev_id in self.reviews.get_ids():
-            current_recipe = 
+            words = self.reviews[rev_id].split()
+                for word in words:
+                    if word in word_dict
 
         self.normalize_reviews_scores()
 
@@ -446,25 +455,20 @@ class TopChef:
         self.reviews.sort_reviews()
 
     def get_top_n_chefs(self, n=1):
-        # Complete this function
-        return None
+        return self.chefs.get_top_n(n)
 
     def get_top_n_recipes(self, n=1):
-        # Complete this function
-        return None
+        return self.recipes.get_top_n(n)
 
     def get_top_n_reviews(self, n=1):
-        # Complete this function
-        return None
+        return self.reviews.get_top_n(n)
 
     def show_chefs(self, chefs):
-        # Complete this function
-        pass
+        print(chefs)
 
     def show_recipes(self, recipes):
-        # Complete this function
-        pass
+        print(recipes)
 
     def show_reviews(self, reviews):
-        # Complete this function
-        pass
+        print(reviews)
+        
