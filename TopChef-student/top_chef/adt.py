@@ -447,12 +447,12 @@ class Reviews:
     def min_score(self):
         """
         """
-        return min(self.set_scores())
+        return min(self.get_scores())
 
     def max_score(self):
         """
         """
-        return max(self.set_scores())
+        return max(self.get_scores())
 
     def is_sorted(self):
         """
