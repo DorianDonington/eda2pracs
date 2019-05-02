@@ -618,14 +618,12 @@ class TopChef:
         self.scores = []
 
         for rev_id in self.reviews.get_ids():
-            suma = 0
             review = self.reviews.get_review(rev_id)
             recipe_id = review.get_recipe_id()
             recipe = self.recipes.get_recipe(recipe_id)
-            suma += review.get_score()
-            recipe.set_score(suma)
+            recipe.set_score(recipe.get_score()+review.get_score())
             recipe.add_number_review()
-                    
+
         for rec_id in self.recipes.get_ids():
             recipe = self.recipes.get_recipe(rec_id)
             if recipe.get_number_review() !=0:
