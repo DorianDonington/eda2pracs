@@ -40,7 +40,9 @@ class WordDictionary:
 
                     except ValueError: #Capturamos el error de que la segunda palabra no sea un número
                         raise WordDictionaryException("There is some error on the database!")
-                  
+
+        print("Load word completed. ")
+
     def add_word(self, word, value):
         self.words[word] = value
 
