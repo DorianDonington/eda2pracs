@@ -630,8 +630,6 @@ class TopChef:
 
             if recipe.get_number_review() !=0:
                 media = round(recipe.get_score()/recipe.get_number_review(),2)
-            else:
-                media = 0
 
             recipe.set_score(media)
             self.scores.append(media)
