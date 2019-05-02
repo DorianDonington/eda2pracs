@@ -6,30 +6,46 @@ class TopChefException(Exception):
 #  Structure to hold a chef
 class Chef:
     def __init__(self, chef_id=None, chef_name=None, chef_restaurant=None):
+        """
+        """
         self.id = chef_id
         self.name = chef_name
         self.restaurant = chef_restaurant
         self.score = 0.0
 
     def get_id(self):
+        """
+        """
         return self.id
 
     def add_score(self, score):
+        """
+        """
         self.score += score
 
     def get_name(self):
+        """
+        """
         return self.name
 
     def get_restaurant(self):
+        """
+        """
         return self.restaurant
 
     def get_score(self):
+        """
+        """
         return self.score
 
     def set_score(self, score):
+        """
+        """
         self.score = score
 
     def __str__(self):
+        """
+        """
         chef_str = "ID: %s; " % (str(self.id))
         chef_str += "NAME: %s; " % (self.name)
         chef_str += "RESTAURANT: %s; " % (self.restaurant)
@@ -39,6 +55,8 @@ class Chef:
 # Structure to hold all chefs
 class Chefs:
     def __init__(self):
+        """
+        """
         self.chefs = {}
         self.next = 0
         self.sorted_chefs = []
@@ -88,11 +106,15 @@ class Chefs:
             raise TopChefException("There is no chef assigned to that id")
 
     def is_sorted(self):
+        """
+        """
         # Complete this function
         #Necesito saber la puntuacion de cada chef
         return False
 
     def sort_chefs(self):
+        """
+        """
         # Complete this function
         #Lo mismo que la funcion de arriba!
         pass
@@ -108,6 +130,8 @@ class Chefs:
         return self.sorted_chefs[0:n]
 
     def __str__(self):
+        """
+        """
         chefs_str = ""
         for chef in self.get_ids():
             chefs_str+= self.chefs[chef].__str__()
@@ -125,30 +149,46 @@ class Chefs:
 # Structure to hold a recipe
 class Recipe:
     def __init__(self, rec_id=None, rec_name=None, rec_chef_id=None):
+        """
+        """
         self.id = rec_id
         self.name = rec_name
         self.chef_id = rec_chef_id
         self.score = 0.0
 
     def get_id(self):
+        """
+        """
         return self.id
 
     def get_name(self):
+        """
+        """
         return self.name
 
     def get_score(self):
+        """
+        """
         return self.score
 
     def set_score(self, score):
+        """
+        """
         self.score = score
 
     def add_score(self, score):
+        """
+        """
         self.score += score
 
     def get_chef_id(self):
+        """
+        """
         return self.chef_id
 
     def __str__(self):
+        """
+        """
         rec_str = "ID: %s; " % (str(self.id))
         rec_str += "NAME: %s; " % (self.name)
         rec_str += "CHEF ID: %s; " % (self.chef_id)
@@ -157,7 +197,10 @@ class Recipe:
 
 # Structure to hold the recipes
 class Recipes:
+    
     def __init__(self):
+        """
+        """
         self.recipes = {}
         self.next_recipe = 0
         self.sorted_recipes = []
@@ -207,11 +250,15 @@ class Recipes:
             raise TopChefException("There is no recipe assigned to that id!")
 
     def is_sorted(self):
+        """
+        """
         # Complete this function
         #Me faltan las puntuaciones
         return False
 
     def sort_recipes(self):
+        """
+        """
         # Complete this function
         #Me faltan las puntuaciones
         pass
@@ -225,6 +272,8 @@ class Recipes:
         return self.sorted_recipes[0:n]
 
     def __str__(self):
+        """
+        """
         rec_str = ""
         for recipe in self.get_ids():
             rec_str+= self.recipes[recipe].__str__()
@@ -241,27 +290,41 @@ class Recipes:
 # Structure to hold a review
 class Review:
     def __init__(self, rev_id=None, review=None, rec_id=None):
+        """
+        """
         self.id = rev_id
         self.review = review
         self.recipe_id = rec_id
         self.score = 0.0
 
     def get_id(self):
+        """
+        """
         return self.id
 
     def get_review(self):
+        """
+        """
         return self.review
 
     def get_recipe_id(self):
+        """
+        """
         return self.recipe_id
 
     def get_score(self):
+        """
+        """
         return self.score
 
     def set_score(self, score):
+        """
+        """
         self.score = score
 
     def __str__(self):
+        """
+        """
         recipe_str = "ID: %s; " % (str(self.id))
         recipe_str += "REVIEW: %s; " % (self.review)
         recipe_str += "RECIPE ID: %s; " % (self.recipe_id)
@@ -271,6 +334,8 @@ class Review:
 # Structure to hold the reviews
 class Reviews:
     def __init__(self):
+        """
+        """
         self.reviews = {}
         self.next_review = 0
         self.sorted_reviews = []
@@ -319,7 +384,8 @@ class Reviews:
             raise TopChefException("There is no such review assigned to that id")
 
     def array_scores(self):
-
+        """
+        """
         scores =[]
         for rev_id in self.get_ids():
             review = self.reviews[rev_id]
@@ -327,12 +393,18 @@ class Reviews:
         return scores
 
     def min_score(self):
+        """
+        """
         return min(self.array_scores())
 
     def max_score(self):
+        """
+        """
         return max(self.array_scores())
 
     def is_sorted(self):
+        """
+        """
         if self.sorted_reviews == []:
             return False
         return True
@@ -357,6 +429,7 @@ class Reviews:
     			j -= 1
     		i += 1
         """
+        
 
     def get_top_n(self, n=1):
         """
@@ -367,6 +440,8 @@ class Reviews:
         return self.sorted_reviews[0:n]
 
     def __str__(self):
+        """
+        """
         rev_str = ""
         for review in self.get_ids():
             rev_str+= self.reviews[review].__str__()
@@ -377,6 +452,8 @@ class Reviews:
 class TopChef:
 
     def __init__(self):
+        """
+        """
         self.chefs = Chefs()
         self.recipes = Recipes()
         self.reviews = Reviews()
@@ -421,24 +498,35 @@ class TopChef:
                     raise TopChefException("Wrong file!") #Control de errores de fichero correcto
         
     def clear(self):
+        """
+        """
         self.__init__()
 
     def add_chef(self, name, rest):
+        """
+        """
         return self.chefs.add_chef(name, rest)
         
     def add_recipe(self, id_chef, name):
+        """
+        """
         return self.recipes.add_recipe(id_chef, name)
 
     def add_review(self, id_rev,review):
+        """
+        """
         return self.reviews.add_review(id_rev,review)
 
     def compute_scores(self, word_dict):
+        """
+        """
         self.compute_reviews_score(word_dict)
         self.compute_recipes_score()
         self.compute_chefs_score()
 
     def compute_reviews_score(self, word_dict):
-        
+        """
+        """
         if len(self.chefs)==0:
             raise TopChefException("No data yet!")
 
@@ -456,6 +544,8 @@ class TopChef:
         self.normalize_reviews_scores()
 
     def normalize_reviews_scores(self):
+        """
+        """
         max_score = self.reviews.max_score()
         min_score = self.reviews.min_score()
 
@@ -465,6 +555,8 @@ class TopChef:
             review.set_score(round((review_score-min_score)/(max_score-min_score),2))
 
     def compute_recipes_score(self):
+        """
+        """
         for rev_id in self.reviews.get_ids():
             for rec_id in self.recipes.get_ids():
 
@@ -480,38 +572,58 @@ class TopChef:
         self.normalize_recipes_scores()
 
     def normalize_recipes_scores(self):
+        """
+        """
         # Complete this function
         pass
 
     def compute_chefs_score(self):
+        """
+        """
         # Complete this function
         for rec_id in self.recipes.get_ids():
             continue
 
     def normalize_chefs_scores(self):
+        """
+        """
         # Complete this function
         pass
 
     def sort_structures(self):
+        """
+        """
         self.chefs.sort_chefs()
         self.recipes.sort_recipes()
         self.reviews.sort_reviews()
 
     def get_top_n_chefs(self, n=1):
+        """
+        """
         return self.chefs.get_top_n(n)
 
     def get_top_n_recipes(self, n=1):
+        """
+        """
         return self.recipes.get_top_n(n)
 
     def get_top_n_reviews(self, n=1):
+        """
+        """
         return self.reviews.get_top_n(n)
 
     def show_chefs(self, chefs):
+        """
+        """
         print(chefs)
 
     def show_recipes(self, recipes):
+        """
+        """
         print(recipes)
 
     def show_reviews(self, reviews):
+        """
+        """
         print(reviews)
         
