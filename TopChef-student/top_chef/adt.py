@@ -12,6 +12,8 @@ class Chef:
         self.name = chef_name
         self.restaurant = chef_restaurant
         self.score = 0.0
+        self.number_recipe = 0
+
 
     def get_id(self):
         """
@@ -27,6 +29,11 @@ class Chef:
         """
         """
         return self.name
+    def add_number_recipe(self):
+        self.number_recipe += 1
+
+    def get_number_recipe(self):
+        return self.number_recipe
 
     def get_restaurant(self):
         """
@@ -175,7 +182,6 @@ class Recipe:
         self.chef_id = rec_chef_id
         self.score = 0.0
         self.number_review = 0
-
 
     def get_id(self):
         """
@@ -646,9 +652,25 @@ class TopChef:
     def compute_chefs_score(self):
         """
         """
-        # Complete this function
-        for rec_id in self.recipes.get_ids():
-            continue
+        self.scores = []
+
+        for rec_id in self.chefs.get_ids():
+            suma = 0
+            recipe = self.recipes.get_recipe(rec_id)
+            chef_id = recipe.get_chef_id()
+            chef = self.chefs.get_chef(chef_id)
+            suma += recipe.get_score()
+            chef.set_score(suma)
+            chef.add_number_recipe()
+                    
+        for chef_id in self.chefs.get_ids():
+            chef = self.chefs.get_chef(chef_id)
+            if chef.get_number_recipe() !=0:
+                media = chef.get_score()/chef.get_number_recipe()
+                chef.set_score(media)
+                self.scores.append(media)
+
+        self.normalize_recipes_scores()
 
     def normalize_chefs_scores(self):
         """
