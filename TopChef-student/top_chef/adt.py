@@ -626,9 +626,12 @@ class TopChef:
 
         for rec_id in self.recipes.get_ids():
             recipe = self.recipes.get_recipe(rec_id)
+
             if recipe.get_number_review() !=0:
                 media = round(recipe.get_score()/recipe.get_number_review(),2)
-            
+            else:
+                media = 0
+
             recipe.set_score(media)
             self.scores.append(media)
 
@@ -645,29 +648,28 @@ class TopChef:
             rec_score = recipe.get_score()
             recipe.set_score(round((rec_score-min_review)/(max_review-min_review),2))
 
-        # Complete this function
-        pass
-
     def compute_chefs_score(self):
         """
         """
         self.scores = []
 
         for rec_id in self.recipes.get_ids():
-            suma = 0
             recipe = self.recipes.get_recipe(rec_id)
             chef_id = recipe.get_chef_id()
             chef = self.chefs.get_chef(chef_id)
-            suma += recipe.get_score()
-            chef.set_score(suma)
+            chef.set_score(chef.get_score()+recipe.get_score())
             chef.add_number_recipe()
+
                     
         for chef_id in self.chefs.get_ids():
             chef = self.chefs.get_chef(chef_id)
             if chef.get_number_recipe() !=0:
                 media = round(chef.get_score()/chef.get_number_recipe(),2)
-                chef.set_score(media)
-                self.scores.append(media)
+            else: 
+                media = 0
+
+            chef.set_score(media)
+            self.scores.append(media)
 
         self.normalize_recipes_scores()
 
@@ -681,8 +683,7 @@ class TopChef:
             chef = self.chefs.get_chef(chef_id)
             chef_score = chef.get_score()
             chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),2))
-        # Complete this function
-        pass
+        
 
     def sort_structures(self):
         """
