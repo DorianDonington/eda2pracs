@@ -116,11 +116,11 @@ class Chefs:
 		"""
 		Comprobar si estan ordenado lista de recipes.
 		"""
-		if len(self.sort_chefs()) == 0:
+		if len(self.sorted_chefs) == 0:
 			return False
 
-		for i in range(len(self.sort_chefs)-1):
-			if self.sort_chefs[i].get_score() < self.sort_chefs[i+1].get_score():
+		for i in range(len(self.sorted_chefs)-1):
+			if self.sorted_chefs[i].get_score() < self.sorted_chefs[i+1].get_score():
 				return False
 
 		return True
