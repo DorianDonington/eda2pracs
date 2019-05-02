@@ -654,7 +654,7 @@ class TopChef:
         """
         self.scores = []
 
-        for rec_id in self.chefs.get_ids():
+        for rec_id in self.recipes.get_ids():
             suma = 0
             recipe = self.recipes.get_recipe(rec_id)
             chef_id = recipe.get_chef_id()
