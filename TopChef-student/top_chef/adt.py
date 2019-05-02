@@ -114,10 +114,29 @@ class Chefs:
 
     def sort_chefs(self):
         """
+        Funcion que genera una lista de reviews ordenado por score.
         """
-        # Complete this function
-        #Lo mismo que la funcion de arriba!
-        pass
+        # Primero meter todos los elementos de diccionario a la lista en forma desordenado.
+        # Porque diccionario es objeto sin ordenes.
+        for chef in self.chefs:
+            chef_temp = self.get_chef(chef)
+            self.sorted_chefs.append(chef_temp)
+
+        # Utilizando metodo de ordenar ascendente por insercion para ordenar.
+        # Va comparando elemento con su elemento anterior,
+        # Si elemento es mayor que elemento anterior, cambio de posicion.
+        # una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
+        # Si elemento no es mayor, elemento + 1, y entra siguiente vuelta de bucle
+        # hasta termina recorrer toda la lista, i = len(lista).
+        i = 1
+        while i < len(self.sorted_chefs):
+            j = i
+            while j > 0 and self.sorted_chefs[j].get_score() > self.sorted_chefs[j - 1].get_score():
+                chef_temp = self.sorted_chefs[j] # Guarda elemento mayor a un variable temporar
+                self.sorted_chefs[j] = self.sorted_chefs[j - 1]
+                self.sorted_chefs[j - 1] = chef_temp
+                j -= 1
+            i += 1
 
     def get_top_n(self, n=1):
         """
@@ -136,7 +155,7 @@ class Chefs:
         for chef in self.get_ids():
             chefs_str+= self.chefs[chef].__str__()
             chefs_str+= "\n"
-                
+
         return chefs_str
 
     def __len__(self):
@@ -205,7 +224,7 @@ class Recipe:
 
 # Structure to hold the recipes
 class Recipes:
-    
+
     def __init__(self):
         """
         """
@@ -266,10 +285,29 @@ class Recipes:
 
     def sort_recipes(self):
         """
+        Funcion que genera una lista de reviews ordenado por score.
         """
-        # Complete this function
-        #Me faltan las puntuaciones
-        pass
+        # Primero meter todos los elementos de diccionario a la lista en forma desordenado.
+        # Porque diccionario es objeto sin ordenes.
+        for recipe in self.recipes:
+            recipe_temp = self.get_recipe(recipe)
+            self.sorted_recipes.append(recipe_temp)
+
+        # Utilizando metodo de ordenar ascendente por insercion para ordenar.
+        # Va comparando elemento con su elemento anterior,
+        # Si elemento es mayor que elemento anterior, cambio de posicion.
+        # una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
+        # Si elemento no es mayor, elemento + 1, y entra siguiente vuelta de bucle
+        # hasta termina recorrer toda la lista, i = len(lista).
+        i = 1
+        while i < len(self.sorted_recipes):
+            j = i
+            while j > 0 and self.sorted_recipes[j].get_score() > self.sorted_recipes[j - 1].get_score():
+                recipe_temp = self.sorted_recipes[j] # Guarda elemento mayor a un variable temporar
+                self.sorted_recipes[j] = self.sorted_recipes[j - 1]
+                self.sorted_recipes[j - 1] = recipe_temp
+                j -= 1
+            i += 1
 
     def get_top_n(self, n=1):
         """
@@ -418,26 +456,30 @@ class Reviews:
         return True
 
     def sort_reviews(self):
-	    """
-	    Funcion que genera una lista de reviews ordenado por score.
-	    
-		# Primero meter todos los elementos de diccionario a la lista en forma desordenado.
-	    for review in self.reviews:
-	    	review_temp = self.get_review(review)
-	    	self.sorted_reviews.append(review_temp)
-
-	    i = 1
-
-        while i < len(self.sorted_reviews):
-	    	j = i
-    		while j > 0 and self.sorted_reviews[j].get_score()>self.sorted_reviews[j-1].get_score():
-    			review_temp = self.sorted_reviews[j]
-    			self.sorted_reviews[j] = self.sorted_reviews[j-1]
-    			self.sorted_reviews[j - 1] = review_temp
-    			j -= 1
-    		i += 1
         """
-        
+        Funcion que genera una lista de reviews ordenado por score.
+        """
+        # Primero meter todos los elementos de diccionario a la lista en forma desordenado.
+        # Porque diccionario es objeto sin ordenes.
+        for review in self.reviews:
+            review_temp = self.get_review(review)
+            self.sorted_reviews.append(review_temp)
+
+        # Utilizando metodo de ordenar ascendente por insercion para ordenar.
+        # Va comparando elemento con su elemento anterior,
+        # Si elemento es mayor que elemento anterior, cambio de posicion.
+        # una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
+        # Si elemento no es mayor, elemento + 1, y entra siguiente vuelta de bucle
+        # hasta termina recorrer toda la lista, i = len(lista).
+        i = 1
+        while i < len(self.sorted_reviews):
+            j = i
+            while j > 0 and self.sorted_reviews[j].get_score()>self.sorted_reviews[j-1].get_score():
+                review_temp = self.sorted_reviews[j]
+                self.sorted_reviews[j] = self.sorted_reviews[j-1]
+                self.sorted_reviews[j - 1] = review_temp
+                j -= 1
+            i += 1
 
     def get_top_n(self, n=1):
         """
@@ -501,11 +543,11 @@ class TopChef:
                     line = line.strip() #Eliminamos \n
                     review = line.translate(str.maketrans('', '', string.punctuation)).lower() #Eliminamos símbolos de puntuación y ponemos todo en minus
                     self.add_review(current_recipe_id, review)
-                
+
                 else:
                     self.clear() #Errores? Borramos todo
                     raise TopChefException("Wrong file!") #Control de errores de fichero correcto
-        
+
     def clear(self):
         """
         """
@@ -515,7 +557,7 @@ class TopChef:
         """
         """
         return self.chefs.add_chef(name, rest)
-        
+
     def add_recipe(self, id_chef, name):
         """
         """
@@ -534,6 +576,7 @@ class TopChef:
         self.compute_chefs_score()
 
     def compute_reviews_score(self, word_dict):
+
         """
         """
         if len(self.chefs)==0:
@@ -644,16 +687,24 @@ class TopChef:
 
     def show_chefs(self, chefs):
         """
+        Mostrar por pantalla lista de N chefs
+        :param recipes: Lista de objetos de chefs.
         """
-        print(chefs)
+        for chef in chefs:
+            print(chef)
 
     def show_recipes(self, recipes):
         """
+        Mostrar por pantalla lista de N recipes
+        :param recipes: Lista de objetos de recipes.
         """
-        print(recipes)
+        for recipe in recipes:
+            print(recipe)
 
     def show_reviews(self, reviews):
         """
+        Mostrar por pantalla lista de N reviews.
+        :param reviews: Lista de objetos de reviews.
         """
-        print(reviews)
-        
+        for review in reviews:
+            print(review)
