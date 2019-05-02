@@ -513,10 +513,25 @@ class TopChef:
         return self.reviews.get_top_n(n)
 
     def show_chefs(self, chefs):
-        print(chefs)
+        """
+        Mostrar por pantalla lista de N chefs
+        :param recipes: Lista de objetos de chefs.
+        """
+        for chef in chefs:
+            print(chef)
 
     def show_recipes(self, recipes):
-        print(recipes)
+        """
+        Mostrar por pantalla lista de N recipes
+        :param recipes: Lista de objetos de recipes.
+        """
+        for recipe in recipes:
+            print(recipe)
 
     def show_reviews(self, reviews):
-        print(reviews)
+        """
+        Mostrar por pantalla lista de N reviews.
+        :param reviews: Lista de objetos de reviews.
+        """
+        for review in reviews:
+            print(review)
