@@ -630,7 +630,6 @@ class TopChef:
 
             if recipe.get_number_review() !=0:
                 media = round(recipe.get_score()/recipe.get_number_review(),2)
-
                 recipe.set_score(media)
                 self.scores.append(media)
 
@@ -664,11 +663,10 @@ class TopChef:
             chef = self.chefs.get_chef(chef_id)
             if chef.get_number_recipe() !=0:
                 media = round(chef.get_score()/chef.get_number_recipe(),2)
-            else: 
-                media = 0
+            
 
-            chef.set_score(media)
-            self.scores.append(media)
+                chef.set_score(media)
+                self.scores.append(media)
 
         self.normalize_recipes_scores()
 
