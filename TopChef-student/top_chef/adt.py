@@ -457,6 +457,7 @@ class TopChef:
         self.chefs = Chefs()
         self.recipes = Recipes()
         self.reviews = Reviews()
+        self.scores = []
 
     def load_data(self, path):
         """
@@ -557,17 +558,23 @@ class TopChef:
     def compute_recipes_score(self):
         """
         """
+        self.scores = []
+        
         for rev_id in self.reviews.get_ids():
+            suma = 0
+            n = 0
+
             for rec_id in self.recipes.get_ids():
 
-            review = self.reviews.get_review(rev_id)
-            raw_data = review.get_review().split()
-            for word in raw_data:
-                if word_dict.exists(word):
-                    word_score = word_dict.get_value(word)
-                    suma += word_score
+                review = self.reviews.get_review(rev_id)
+                if review.get_recipe_id() == rec_id:
+                    suma += review.get_score()
+                    n += 1
+                    break
 
-            review.set_score(round(suma,2))
+            recipe = self.recipes.get_recipe(rec_id)
+            recipe.set_score(suma/n)
+            self.scores.append(suma/n)
 
         self.normalize_recipes_scores()
 
