@@ -260,8 +260,30 @@ class Recipes:
         """
         """
         # Complete this function
-        #Me faltan las puntuaciones
-        pass
+        """
+        Funcion que genera una lista de reviews ordenado por score.
+        """
+        # Primero meter todos los elementos de diccionario a la lista en forma desordenado.
+        # Porque diccionario es objeto sin ordenes.
+        for recipe in self.recipes:
+            recipe_temp = self.get_recipe(recipe)
+            self.sorted_recipes.append(recipe_temp)
+
+        # Utilizando metodo de ordenar ascendente por insercion para ordenar.
+        # Va comparando elemento con su elemento anterior,
+        # Si elemento es mayor que elemento anterior, cambio de posicion.
+        # una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
+        # Si elemento no es mayor, elemento + 1, y entra siguiente vuelta de bucle
+        # hasta termina recorrer toda la lista, i = len(lista).
+        i = 1
+        while i < len(self.sorted_recipes):
+            j = i
+            while j > 0 and self.sorted_recipes[j].get_score() > self.sorted_recipes[j - 1].get_score():
+                recipe_temp = self.sorted_recipes[j] # Guarda elemento mayor a un variable temporar
+                self.sorted_recipes[j] = self.sorted_recipes[j - 1]
+                self.sorted_recipes[j - 1] = recipe_temp
+                j -= 1
+            i += 1
 
     def get_top_n(self, n=1):
         """
@@ -422,6 +444,7 @@ class Reviews:
         # Utilizando metodo de ordenar ascendente por insercion para ordenar.
         # Va comparando elemento con su elemento anterior,
         # Si elemento es mayor que elemento anterior, cambio de posicion.
+        # una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
         # Si elemento no es mayor, elemento + 1, y entra siguiente vuelta de bucle
         # hasta termina recorrer toda la lista, i = len(lista).
         i = 1
