@@ -609,6 +609,7 @@ class TopChef:
         min_review = self.reviews.min_score()
 
         for review_id in self.reviews.get_ids():
+        
             review = self.reviews.get_review(review_id)
             review_score = review.get_score()
             review.set_score(round((review_score-min_review)/(max_review-min_review),2))
@@ -643,8 +644,9 @@ class TopChef:
 
         for rec_id in self.recipes.get_ids():
             recipe = self.recipes.get_recipe(rec_id)
-            rec_score = recipe.get_score()
-            recipe.set_score(round((rec_score-min_review)/(max_review-min_review),2))
+            if recipe.get_number_review() !=0:
+                rec_score = recipe.get_score()
+                recipe.set_score(round((rec_score-min_review)/(max_review-min_review),2))
 
     def compute_chefs_score(self):
         """
@@ -653,10 +655,11 @@ class TopChef:
 
         for rec_id in self.recipes.get_ids():
             recipe = self.recipes.get_recipe(rec_id)
-            chef_id = recipe.get_chef_id()
-            chef = self.chefs.get_chef(chef_id)
-            chef.set_score(chef.get_score()+recipe.get_score())
-            chef.add_number_recipe()
+            if recipe.get_number_review() !=0:
+                chef_id = recipe.get_chef_id()
+                chef = self.chefs.get_chef(chef_id)
+                chef.set_score(chef.get_score()+recipe.get_score())
+                chef.add_number_recipe()
 
                     
         for chef_id in self.chefs.get_ids():
@@ -668,7 +671,7 @@ class TopChef:
                 chef.set_score(media)
                 self.scores.append(media)
 
-        self.normalize_recipes_scores()
+        self.normalize_chefs_scores()
 
     def normalize_chefs_scores(self):
         """
@@ -678,8 +681,10 @@ class TopChef:
 
         for chef_id in self.chefs.get_ids():
             chef = self.chefs.get_chef(chef_id)
-            chef_score = chef.get_score()
-            chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),2))
+            if chef.get_number_recipe() !=0:
+
+                chef_score = chef.get_score()
+                chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),2))
         
 
     def sort_structures(self):
@@ -709,21 +714,18 @@ class TopChef:
         Mostrar por pantalla lista de N chefs
         :param recipes: Lista de objetos de chefs.
         """
-        for chef in chefs:
-            print(chef)
+        print(chefs)
 
     def show_recipes(self, recipes):
         """
         Mostrar por pantalla lista de N recipes
         :param recipes: Lista de objetos de recipes.
         """
-        for recipe in recipes:
-            print(recipe)
+        print(recipes)
 
     def show_reviews(self, reviews):
         """
         Mostrar por pantalla lista de N reviews.
         :param reviews: Lista de objetos de reviews.
         """
-        for review in reviews:
-            print(review)
+        print(reviews)
