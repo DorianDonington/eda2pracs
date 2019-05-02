@@ -333,29 +333,30 @@ class Reviews:
         return max(self.array_scores())
 
     def is_sorted(self):
-        # Complete this function
-        #Necesito saber el tema puntuaciones.
-        return False
+        if self.sorted_reviews == []:
+            return False
+        return True
 
-	def sort_reviews(self):
-		"""
-		Funcion que genera una lista de reviews ordenado por score.
-		"""
+    def sort_reviews(self):
+	    """
+	    Funcion que genera una lista de reviews ordenado por score.
+	    
 		# Primero meter todos los elementos de diccionario a la lista en forma desordenado.
-		for review in self.reviews:
-			review_temp = self.get_review(review)
-			self.sorted_reviews.append(review_temp)
+	    for review in self.reviews:
+	    	review_temp = self.get_review(review)
+	    	self.sorted_reviews.append(review_temp)
 
-		i = 1
-		while i < len(self.sorted_reviews):
-			j = i
-			while j > 0 and self.sorted_reviews[j].get_score()>self.sorted_reviews[j-1].get_score():
-				review_temp = self.sorted_reviews[j]
-				self.sorted_reviews[j] = self.sorted_reviews[j-1]
-				self.sorted_reviews[j - 1] = review_temp
-				j -= 1
-			i += 1
+	    i = 1
 
+        while i < len(self.sorted_reviews):
+	    	j = i
+    		while j > 0 and self.sorted_reviews[j].get_score()>self.sorted_reviews[j-1].get_score():
+    			review_temp = self.sorted_reviews[j]
+    			self.sorted_reviews[j] = self.sorted_reviews[j-1]
+    			self.sorted_reviews[j - 1] = review_temp
+    			j -= 1
+    		i += 1
+        """
 
     def get_top_n(self, n=1):
         """
@@ -452,17 +453,30 @@ class TopChef:
 
             review.set_score(round(suma,2))
 
-
         self.normalize_reviews_scores()
 
     def normalize_reviews_scores(self):
-        # Complete this function
-        pass
+        max_score = self.reviews.max_score()
+        min_score = self.reviews.min_score()
+
+        for review_id in self.reviews.get_ids():
+            review = self.reviews.get_review(review_id)
+            review_score = review.get_score()
+            review.set_score(round((review_score-min_score)/(max_score-min_score),2))
 
     def compute_recipes_score(self):
-        # Complete this function
         for rev_id in self.reviews.get_ids():
-            continue
+            for rec_id in self.recipes.get_ids():
+
+            review = self.reviews.get_review(rev_id)
+            raw_data = review.get_review().split()
+            for word in raw_data:
+                if word_dict.exists(word):
+                    word_score = word_dict.get_value(word)
+                    suma += word_score
+
+            review.set_score(round(suma,2))
+
         self.normalize_recipes_scores()
 
     def normalize_recipes_scores(self):
