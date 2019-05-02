@@ -435,7 +435,7 @@ class Reviews:
         else:
             raise TopChefException("There is no such review assigned to that id")
 
-    def array_scores(self):
+    def get_scores(self):
         """
         """
         scores =[]
@@ -447,12 +447,12 @@ class Reviews:
     def min_score(self):
         """
         """
-        return min(self.array_scores())
+        return min(self.set_scores())
 
     def max_score(self):
         """
         """
-        return max(self.array_scores())
+        return max(self.set_scores())
 
     def is_sorted(self):
         """
@@ -569,10 +569,10 @@ class TopChef:
         """
         return self.recipes.add_recipe(id_chef, name)
 
-    def add_review(self, id_rev,review):
+    def add_review(self, id_rep,review):
         """
         """
-        return self.reviews.add_review(id_rev,review)
+        return self.reviews.add_review(id_rep,review)
 
     def compute_scores(self, word_dict):
         """
