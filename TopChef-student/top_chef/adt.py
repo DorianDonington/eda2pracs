@@ -520,12 +520,13 @@ class TopChef:
         Funcion que se encarga de generar informaciones de chefs.
         :param path: Direccion de archivo de chefs
         """
+        self.clear() #Para no cargar datos dos veces
+
         # Definir palabras clave.
         CHEF = "CHEF"
         COURSE = "COURSE"
         TAB = "\t"
         CONTROL = False
-
         with open(path) as fd: 
             for line in fd:
                 if not CONTROL and CHEF in line:
