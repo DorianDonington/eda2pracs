@@ -174,6 +174,8 @@ class Recipe:
         self.name = rec_name
         self.chef_id = rec_chef_id
         self.score = 0.0
+        self.number_review = 0
+
 
     def get_id(self):
         """
@@ -195,6 +197,12 @@ class Recipe:
         """
         self.score = score
 
+    def add_number_review(self):
+        self.number_review += 1
+
+    def get_number_review(self):
+        return self.number_review
+        
     def add_score(self, score):
         """
         """
@@ -363,11 +371,11 @@ class Review:
     def __str__(self):
         """
         """
-        recipe_str = "ID: %s; " % (str(self.id))
-        recipe_str += "REVIEW: %s; " % (self.review)
-        recipe_str += "RECIPE ID: %s; " % (self.recipe_id)
-        recipe_str += "SCORE: %s" % (self.score)
-        return recipe_str
+        review_str = "ID: %s; " % (str(self.id))
+        review_str += "REVIEW: %s; " % (self.review)
+        review_str += "RECIPE ID: %s; " % (self.recipe_id)
+        review_str += "SCORE: %s" % (self.score)
+        return review_str
 
 # Structure to hold the reviews
 class Reviews:
@@ -590,13 +598,13 @@ class TopChef:
     def normalize_reviews_scores(self):
         """
         """
-        max_score = self.reviews.max_score()
-        min_score = self.reviews.min_score()
+        max_review = self.reviews.max_score()
+        min_review = self.reviews.min_score()
 
         for review_id in self.reviews.get_ids():
             review = self.reviews.get_review(review_id)
             review_score = review.get_score()
-            review.set_score(round((review_score-min_score)/(max_score-min_score),2))
+            review.set_score(round((review_score-min_review)/(max_review-min_review),2))
 
     def compute_recipes_score(self):
         """
@@ -605,25 +613,33 @@ class TopChef:
 
         for rev_id in self.reviews.get_ids():
             suma = 0
-            n = 0
-
-            for rec_id in self.recipes.get_ids():
-
-                review = self.reviews.get_review(rev_id)
-                if review.get_recipe_id() == rec_id:
-                    suma += review.get_score()
-                    n += 1
-                    break
-
+            review = self.reviews.get_review(rev_id)
+            recipe_id = review.get_recipe_id()
+            recipe = self.recipes.get_recipe(recipe_id)
+            suma += review.get_score()
+            recipe.set_score(suma)
+            recipe.add_number_review()
+                    
+        for rec_id in self.recipes.get_ids():
             recipe = self.recipes.get_recipe(rec_id)
-            recipe.set_score(suma/n)
-            self.scores.append(suma/n)
+            if recipe.get_number_review() !=0:
+                media = recipe.get_score()/recipe.get_number_review()
+                recipe.set_score(media)
+                self.scores.append(media)
 
         self.normalize_recipes_scores()
 
     def normalize_recipes_scores(self):
         """
         """
+        max_review = max(self.scores)
+        min_review = min(self.scores)
+
+        for rec_id in self.recipes.get_ids():
+            recipe = self.recipes.get_recipe(rec_id)
+            rec_score = recipe.get_score()
+            recipe.set_score(round((rec_score-min_review)/(max_review-min_review),2))
+
         # Complete this function
         pass
 
@@ -637,6 +653,13 @@ class TopChef:
     def normalize_chefs_scores(self):
         """
         """
+        max_chef = max(self.scores)
+        min_chef = min(self.scores)
+
+        for chef_id in self.chefs.get_ids():
+            chef = self.chefs.get_chef(chef_id)
+            chef_score = chef.get_score()
+            chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),2))
         # Complete this function
         pass
 
