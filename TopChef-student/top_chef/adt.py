@@ -5,62 +5,6 @@ class TopChefException(Exception):
 
 #  Structure to hold a chef
 class Chef:
-<<<<<<< HEAD
-    def __init__(self, chef_id=None, chef_name=None, chef_restaurant=None):
-        """
-        """
-        self.id = chef_id
-        self.name = chef_name
-        self.restaurant = chef_restaurant
-        self.score = 0.0
-        self.number_recipe = 0
-
-
-    def get_id(self):
-        """
-        
-        """
-        return self.id
-
-    def add_score(self, score):
-        """
-        """
-        self.score += score
-
-    def get_name(self):
-        """
-        """
-        return self.name
-    def add_number_recipe(self):
-        self.number_recipe += 1
-
-    def get_number_recipe(self):
-        return self.number_recipe
-
-    def get_restaurant(self):
-        """
-        """
-        return self.restaurant
-
-    def get_score(self):
-        """
-        """
-        return self.score
-
-    def set_score(self, score):
-        """
-        """
-        self.score = score
-
-    def __str__(self):
-        """
-        """
-        chef_str = "ID: %s; " % (str(self.id))
-        chef_str += "NAME: %s; " % (self.name)
-        chef_str += "RESTAURANT: %s; " % (self.restaurant)
-        chef_str += "SCORE: %s" % (self.score)
-        return chef_str
-=======
 	def __init__(self, chef_id=None, chef_name=None, chef_restaurant=None):
 		"""
 		Initialize the class Chef data.
@@ -136,7 +80,6 @@ class Chef:
 		chef_str += "RESTAURANT: %s; " % (self.restaurant)
 		chef_str += "SCORE: %s" % (self.score)
 		return chef_str
->>>>>>> cbc8c3fb1734fba10f6caac5bf5a2db2777e815f
 
 # Structure to hold all chefs
 class Chefs:
