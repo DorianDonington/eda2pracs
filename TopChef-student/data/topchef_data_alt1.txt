@@ -1,0 +1,40 @@
+CHEF	Alp	La Palacete de manjares
+COURSE	Pirasa
+Incredible. Almost ate my fingers.
+Well served and delicious! Will reccommend.
+COURSE	Dolma
+Very original. Tastes like heaven.
+Interesting.
+CHEF	Spongebob	Krusty Krab
+COURSE	Krabby Patty
+Best patties i've ever had.
+A bit greasy but simply delicious
+CHEF	Squidward	Krusty Krab
+COURSE	Squid salad
+Horrible and very greasy.
+Complicated. Probably won't come to this awful place again. 
+CHEF	Ursula	Mama's kitchen
+COURSE	Regular Lasagna
+Best lasagna I've ever had. Fresh veggies and meat.
+very light.
+COURSE	Pasta with garlic
+Simple and tasty
+Smells like heaven. Unoriginal though.
+CHEF	Ghupta	Taste of India
+COURSE	Lassi
+Simple and delicious. Fresh mango is the best.
+WOW. Unbelievable.
+COURSE	Chicken Biryani
+Portion sizes are pretty big. Very well cooked. 
+Regular compared to the other indian at the other side of the street. Very small place also. 
+COURSE	Naan
+Simple and good naan.
+I guess it's fine. 
+CHEF	Li	Far east kitchen
+COURSE	Veggie ramen
+Good vegetable ramen. It's light and well served.
+I liked this because I am a vegeterian. Otherwise it's pretty normal.
+Glad that they have an accesible entrance to the place. Food is alright.
+COURSE	Sushi mix
+Had rancid tuna inside. Almost puked. 
+Easy light sushi. That's it. 
