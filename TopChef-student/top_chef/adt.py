@@ -154,9 +154,14 @@ class Chefs:
 		"""
 		# Primero meter todos los elementos de diccionario a la lista en forma desordenado.
 		# Porque diccionario es objeto sin ordenes.
+
 		for chef in self.chefs:
 			chef_temp = self.get_chef(chef)
-			self.sorted_chefs.append(chef_temp)
+			if chef_temp not in self.sorted_chefs:
+				self.sorted_chefs.append(chef_temp)
+
+		if self.is_sorted():
+			raise TopChefException("It's sorted.")
 
 		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
@@ -356,8 +361,11 @@ class Recipes:
 		# Porque diccionario es objeto sin ordenes.
 		for recipe in self.recipes:
 			recipe_temp = self.get_recipe(recipe)
-			self.sorted_recipes.append(recipe_temp)
+			if recipe not in self.sorted_recipes:
+				self.sorted_recipes.append(recipe_temp)
 
+		if self.is_sorted():
+			raise TopChefException("It's sorted. ")
 		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
@@ -556,8 +564,11 @@ class Reviews:
 		# Porque diccionario es objeto sin ordenes.
 		for review in self.reviews:
 			review_temp = self.get_review(review)
-			self.sorted_reviews.append(review_temp)
+			if review_temp not in self.sorted_reviews:
+				self.sorted_reviews.append(review_temp)
 
+		if self.is_sorted():
+			raise TopChefException("It's sorted. ")
 		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
@@ -619,7 +630,6 @@ class TopChef:
 		Funcion que se encarga de generar informaciones de chefs.
 		:param path: Direccion de archivo de chefs
 		"""
-		self.clear() #Para no cargar datos dos veces
 
 		# Definir palabras clave.
 		CHEF = "CHEF"
@@ -869,10 +879,12 @@ class TopChef:
 		"""
 		for chef in chefs:
 			print(chef)
-			for recipe in self.get_top_n_recipes(len(self.recipes)):
+			for recipe_id in self.recipes.get_ids():
+				recipe = self.recipes.get_recipe(recipe_id)
 				if recipe.chef_id == chef.id:
 					print("\t{}".format(recipe))
-					for review in self.get_top_n_reviews(len(self.reviews)):
+					for review_ids in self.reviews.get_ids():
+						review = self.reviews.get_review(review_ids)
 						if review.recipe_id == recipe.id:
 							print("\t\t{}".format(review))
 			print("\n", end="")
