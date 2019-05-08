@@ -797,7 +797,7 @@ class TopChef:
 				chef.set_score(media)
 				self.scores.append(media)
 
-		self.normalize_recipes_scores()
+		self.normalize_chefs_scores()
 
 	def normalize_chefs_scores(self):
 		"""
