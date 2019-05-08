@@ -113,7 +113,7 @@ class Chefs:
 		:return: id de nuevo chef generado.
 		"""
 		# Genera un nueva instancia chef
-		new_Chef = Chef(self.next, name, restaurant)
+		new_Chef = Chef(self.next+1, name, restaurant)
 		# Consultar id de nuevo chef
 		chef_id = new_Chef.get_id()
 		# Gudarda nuevo chef al diccionario
@@ -299,7 +299,7 @@ class Recipes:
 		:return: id de nueva receta generado.
 		"""
 		# Genera nueva instancia de recipe y consultar su id.
-		new_recipe = Recipe(self.next_recipe, name, chef_id)
+		new_recipe = Recipe(self.next_recipe+1, name, chef_id)
 		recipe_id = new_recipe.get_id()
 
 		# Guardar nueva recipe a diccionario de recipes.
@@ -475,7 +475,7 @@ class Reviews:
 		:return: id de nueva review generado.
 		"""
 		# Generar nueva review y consutal su id.
-		new_review = Review(self.next_review, review, rec_id)
+		new_review = Review(self.next_review+1, review, rec_id)
 		review_id = new_review.get_id()
 		# Añadir nueva review a diccionario de reviews.
 		self.reviews[review_id] = new_review
