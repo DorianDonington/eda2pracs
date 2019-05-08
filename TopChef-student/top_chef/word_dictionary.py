@@ -45,7 +45,9 @@ class WordDictionary:
 
                     except ValueError: #Capturamos el error de que la segunda palabra no sea un número
                         raise WordDictionaryException("There is some error on the database!")
-                  
+
+        print("Load word completed. ")
+
     def add_word(self, word, value):
         """
         Añadimos una nueva palabra al diccionario con su valor. No controlamos el error de que esté repetida porque este se controla desde una función específica
