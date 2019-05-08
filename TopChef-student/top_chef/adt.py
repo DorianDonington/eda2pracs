@@ -875,6 +875,7 @@ class TopChef:
 					for review in self.get_top_n_reviews(len(self.reviews)):
 						if review.recipe_id == recipe.id:
 							print("\t\t{}".format(review))
+			print("\n", end="")
 
 	def show_recipes(self, recipes):
 		"""
@@ -886,6 +887,7 @@ class TopChef:
 			for review in self.get_top_n_reviews(len(self.reviews)):
 				if review.recipe_id == recipe.id:
 					print("\t{}".format(review))
+			print("\n", end="")
 
 	def show_reviews(self, reviews):
 		"""
