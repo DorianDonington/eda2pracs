@@ -769,8 +769,8 @@ class TopChef:
 		min_review = min(self.scores)
 
 		for rec_id in self.recipes.get_ids():
+			recipe = self.recipes.get_recipe(rec_id)
 			if recipe.get_number_review() != 0:
-				recipe = self.recipes.get_recipe(rec_id)
 				rec_score = recipe.get_score()
 				recipe.set_score(round((rec_score-min_review)/(max_review-min_review),1))
 
@@ -807,8 +807,8 @@ class TopChef:
 		min_chef = min(self.scores)
 
 		for chef_id in self.chefs.get_ids():
-			if chef.get_number_recipes() != 0:
-				chef = self.chefs.get_chef(chef_id)
+			chef = self.chefs.get_chef(chef_id)
+			if chef.get_number_recipe() != 0:
 				chef_score = chef.get_score()
 				chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),1))
 
@@ -882,7 +882,7 @@ class TopChef:
 		:param recipes: Lista de objetos de recipes.
 		"""
 		for recipe in recipes:
-			print(str(recipe))
+			print(recipe)
 			for review in self.get_top_n_reviews(len(self.reviews)):
 				if review.recipe_id == recipe.id:
 					print("\t{}".format(review))
