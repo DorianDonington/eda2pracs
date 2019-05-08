@@ -595,6 +595,13 @@ class Reviews:
 			rev_str+= "\n"
 		return rev_str
 
+	def __len__(self):
+		"""
+		Gives the user a int type with the number of reviews inside the dictionary.
+		:return: the number of recipes inside the dictionary
+		"""
+		return len(self.reviews.keys())
+
 
 class TopChef:
 
@@ -862,12 +869,12 @@ class TopChef:
 		"""
 		for chef in chefs:
 			print(chef)
-			for recipe in self.recipes.sorted_recipes:
+			for recipe in self.get_top_n_recipes(len(self.recipes)):
 				if recipe.chef_id == chef.id:
-					print("\t"+str(recipe))
-					for review in self.reviews.sorted_reviews:
+					print("\t{}".format(recipe))
+					for review in self.get_top_n_reviews(len(self.reviews)):
 						if review.recipe_id == recipe.id:
-							print("\t\t"+str(review))
+							print("\t\t{}".format(review))
 
 	def show_recipes(self, recipes):
 		"""
@@ -876,9 +883,9 @@ class TopChef:
 		"""
 		for recipe in recipes:
 			print(str(recipe))
-			for review in self.reviews.sorted_reviews:
+			for review in self.get_top_n_reviews(len(self.reviews)):
 				if review.recipe_id == recipe.id:
-					print("\t\t"+str(review))
+					print("\t{}".format(review))
 
 	def show_reviews(self, reviews):
 		"""
