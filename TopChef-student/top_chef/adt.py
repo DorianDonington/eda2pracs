@@ -7,6 +7,10 @@ class TopChefException(Exception):
 class Chef:
 	def __init__(self, chef_id=None, chef_name=None, chef_restaurant=None):
 		"""
+		Initialize the class Chef data.
+		:param chef_id: The chef ID.
+		:param chef_name: The chef name.
+		:param chef_restaurant: The chef's restaurant name.
 		"""
 		self.id = chef_id
 		self.name = chef_name
@@ -17,41 +21,59 @@ class Chef:
 
 	def get_id(self):
 		"""
+		:return: The chef ID.
 		"""
 		return self.id
 
 	def add_score(self, score):
 		"""
+		Adds the score to the self.score initializated.
+		:param score: The normalized score.
+		:return: The score addition.
 		"""
 		self.score += score
 
 	def get_name(self):
 		"""
+		:return: Returns the chef's name.
 		"""
 		return self.name
 	def add_number_recipe(self):
+		"""
+		Adds another recipe to the recipe count.
+		"""
 		self.number_recipe += 1
 
 	def get_number_recipe(self):
+		"""
+		:return: The recipes assigned to the selected chef.
+		"""
 		return self.number_recipe
 
 	def get_restaurant(self):
 		"""
+		:return: The restaurant name of the selected chef.
 		"""
 		return self.restaurant
 
 	def get_score(self):
 		"""
+		:return: The sum of the normalized scores.
 		"""
 		return self.score
 
 	def set_score(self, score):
 		"""
+		Sets a score to the selected chef.
+		:param score: Score we want to assign.
+		:return: The assigned score.
 		"""
 		self.score = score
 
 	def __str__(self):
 		"""
+		This funtion prints by screen a sorted way to show a chef's information.
+		:return: The chef information in string format.
 		"""
 		chef_str = "ID: %s; " % (str(self.id))
 		chef_str += "NAME: %s; " % (self.name)
@@ -63,6 +85,7 @@ class Chef:
 class Chefs:
 	def __init__(self):
 		"""
+		Initializes the Chefs dictionary and adt.
 		"""
 		self.chefs = {}
 		self.next = 0
@@ -163,6 +186,8 @@ class Chefs:
 
 	def __str__(self):
 		"""
+		Creates a string that shows por screen the Chefs information
+		:return: The chefs in string format.
 		"""
 		chefs_str = ""
 		for chef in self.get_ids():
@@ -182,6 +207,10 @@ class Chefs:
 class Recipe:
 	def __init__(self, rec_id=None, rec_name=None, rec_chef_id=None):
 		"""
+		Initializes the class Recipe information.
+		:param rec_id: the recipe id
+		:param rec_name: the recipe name
+		:param rec_chef_id: the chef ID assigned to every recipe.
 		"""
 		self.id = rec_id
 		self.name = rec_name
@@ -191,42 +220,60 @@ class Recipe:
 
 	def get_id(self):
 		"""
+		:return: The recipe ID.
 		"""
 		return self.id
 
 	def get_name(self):
 		"""
+		:return: The recipe name.
 		"""
 		return self.name
 
 	def get_score(self):
 		"""
+		:return: The score assigned to the recipe.
 		"""
 		return self.score
 
 	def set_score(self, score):
 		"""
+		Assign a normalized score into the recipe.
+		:param score: The score we want to assign.
+		:return: The score.
 		"""
 		self.score = score
 
 	def add_number_review(self):
+		"""
+		Adds a new review to the recipe
+		"""
 		self.number_review += 1
 
 	def get_number_review(self):
+		"""
+		:return: The number of reviews assigned to the recipe.
+		"""
 		return self.number_review
 
 	def add_score(self, score):
 		"""
+		Adds a new score to the assigned score.
+		:param score: The score we want to add.
+		:return: The sum of both scores.
 		"""
 		self.score += score
 
 	def get_chef_id(self):
 		"""
+		:return: The chef ID assigned to the recipe.
 		"""
 		return self.chef_id
 
 	def __str__(self):
 		"""
+		Prints the recipe information sorted by data.
+		:return: The recipe in string format.
 		"""
 		rec_str = "ID: %s; " % (str(self.id))
 		rec_str += "NAME: %s; " % (self.name)
@@ -239,6 +286,7 @@ class Recipes:
 
 	def __init__(self):
 		"""
+		Initializes the Recipes adt.
 		"""
 		self.recipes = {}
 		self.next_recipe = 0
@@ -339,6 +387,8 @@ class Recipes:
 
 	def __str__(self):
 		"""
+		Prints by screen a sorted information of the recipes adt.
+		:return: The adt in string format.
 		"""
 		rec_str = ""
 		for recipe in self.get_ids():
@@ -357,6 +407,10 @@ class Recipes:
 class Review:
 	def __init__(self, rev_id=None, review=None, rec_id=None):
 		"""
+		Initializes the Review data.
+		:param rev_id: the review id.
+		:param review: what the review says.
+		:param rec_id: The recipe id assigned to that review.
 		"""
 		self.id = rev_id
 		self.review = review
@@ -365,31 +419,38 @@ class Review:
 
 	def get_id(self):
 		"""
+		:return: The review id.
 		"""
 		return self.id
 
 	def get_review(self):
 		"""
+		:return: The review itself.
 		"""
 		return self.review
 
 	def get_recipe_id(self):
 		"""
+		:return: The recipe id assigned to that review
 		"""
 		return self.recipe_id
 
 	def get_score(self):
 		"""
+		:return: The score assigned to that review.
 		"""
 		return self.score
 
 	def set_score(self, score):
 		"""
+		:return: Sets a score to that review.
 		"""
 		self.score = score
 
 	def __str__(self):
 		"""
+		Prints by screen the sorted information of a review
+		:return: The review in string format.
 		"""
 		review_str = "ID: %s; " % (str(self.id))
 		review_str += "REVIEW: %s; " % (self.review)
@@ -401,6 +462,7 @@ class Review:
 class Reviews:
 	def __init__(self):
 		"""
+		Initializes the Reviews adt.
 		"""
 		self.reviews = {}
 		self.next_review = 0
@@ -451,6 +513,8 @@ class Reviews:
 
 	def get_scores(self):
 		"""
+		Creates a new list that saves every score, so we can do a max and a min in every score.
+		:return:
 		"""
 		scores =[]
 		for rev_id in self.get_ids():
@@ -460,17 +524,20 @@ class Reviews:
 
 	def min_score(self):
 		"""
+		:return: The lowest score in the reviews
 		"""
 		return min(self.get_scores())
 
 	def max_score(self):
 		"""
+		:return: the highest score in the reviews.
 		"""
 		return max(self.get_scores())
 
 	def is_sorted(self):
 		"""
 		Comprobar si estan ordenado lista de reviews.
+		:return: Booleano, si esta ordenado devuelve un True, sino devuelve un False.
 		"""
 		if len(self.sorted_reviews) == 0:
 			return False
@@ -520,6 +587,8 @@ class Reviews:
 
 	def __str__(self):
 		"""
+		Sorts the adt information for print intentions.
+		:return: the reviews adt in string format.
 		"""
 		rev_str = ""
 		for review in self.get_ids():
@@ -532,6 +601,7 @@ class TopChef:
 
 	def __init__(self):
 		"""
+		Initializes the TopChef class data.
 		"""
 		self.chefs = Chefs()
 		self.recipes = Recipes()
@@ -582,34 +652,53 @@ class TopChef:
 
 	def clear(self):
 		"""
+		Clears the TopChef class.
+		:return: Reinitialize the hole class.
 		"""
 		self.__init__()
 
 	def add_chef(self, name, rest):
 		"""
+		Adds a new chef into the Chefs class.
+		:param name: The chef name
+		:param rest: The chef's restaurant name.
+		:return: The added chef.
 		"""
 		return self.chefs.add_chef(name, rest)
 
 	def add_recipe(self, id_chef, name):
 		"""
+		Adds a recipe into the Recipes class
+		:param id_chef: The chef ID assigned to that recipe.
+		:param name: The recipe name.
+		:return: The added recipe.
 		"""
 		return self.recipes.add_recipe(id_chef, name)
 
 	def add_review(self, id_rep,review):
 		"""
+		Adds a review into the Reviews class
+		:param id_rep: The recipe ID assigned to that review.
+		:param review: The review.
+		:return: The added review.
 		"""
 		return self.reviews.add_review(id_rep,review)
 
 	def compute_scores(self, word_dict):
 		"""
+		Checks for every review inside the word_dict and returns the computed score of all reviews, recipes and chefs.
+		:param word_dict: The word dictionary opened by the module word_dictionary.py.
+		:return: The computed score of reviews, recipes and chefs.
 		"""
 		self.compute_reviews_score(word_dict)
 		self.compute_recipes_score()
 		self.compute_chefs_score()
 
 	def compute_reviews_score(self, word_dict):
-
 		"""
+		Compute the score of the reviews.
+		:param word_dict: The word dictionary opened by the module word_dictionary.py.
+		:return: The normalized score.
 		"""
 		if len(self.chefs)==0:
 			raise TopChefException("No data yet!")
@@ -629,6 +718,8 @@ class TopChef:
 
 	def normalize_reviews_scores(self):
 		"""
+		Normalizes the reviews score computed.
+		:return: The normalized score.
 		"""
 		max_review = self.reviews.max_score()
 		min_review = self.reviews.min_score()
@@ -640,6 +731,9 @@ class TopChef:
 
 	def compute_recipes_score(self):
 		"""
+		Compute the score of the recipes.
+		:param word_dict: The word dictionary opened by the module word_dictionary.py.
+		:return: The normalized score.
 		"""
 		self.scores = []
 
@@ -662,6 +756,8 @@ class TopChef:
 
 	def normalize_recipes_scores(self):
 		"""
+		Normalizes the recipes scores.
+		:return: The normalized recipe scores.
 		"""
 		max_review = max(self.scores)
 		min_review = min(self.scores)
@@ -673,6 +769,8 @@ class TopChef:
 
 	def compute_chefs_score(self):
 		"""
+		Computes the scores for  the chefs.
+		:return: The normalized score.
 		"""
 		self.scores = []
 
@@ -697,6 +795,8 @@ class TopChef:
 
 	def normalize_chefs_scores(self):
 		"""
+		Normalize the chefs scores.
+		:return: The normalized score.
 		"""
 		max_chef = max(self.scores)
 		min_chef = min(self.scores)
@@ -743,6 +843,9 @@ class TopChef:
 
 	def get_top_n_reviews(self, n=1):
 		"""
+		Checks if there are any recipes and if the reviews are sorted.
+		:param n: The number of reviews the user wants to see.
+		:return: The sorted list of reviews.
 		"""
 		# Control de error: Si no hay chefs.
 		if len(self.recipes) == 0:
