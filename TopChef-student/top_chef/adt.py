@@ -18,7 +18,6 @@ class Chef:
 		self.score = 0.0
 		self.number_recipe = 0
 
-
 	def get_id(self):
 		"""
 		:return: The chef ID.
@@ -75,10 +74,10 @@ class Chef:
 		This funtion prints by screen a sorted way to show a chef's information.
 		:return: The chef information in string format.
 		"""
-		chef_str = "ID: %s; " % (str(self.id))
-		chef_str += "NAME: %s; " % (self.name)
-		chef_str += "RESTAURANT: %s; " % (self.restaurant)
-		chef_str += "SCORE: %s" % (self.score)
+		chef_str = "-ID: %s; " % (str(self.get_id()))
+		chef_str += "NAME: %s; " % (self.get_name())
+		chef_str += "RESTAURANT: %s; " % (self.get_restaurant())
+		chef_str += "SCORE: %s" % (self.get_score())
 		return chef_str
 
 # Structure to hold all chefs
@@ -142,7 +141,8 @@ class Chefs:
 		if len(self.sorted_chefs) == 0:
 			return False
 
-		for i in range(len(self.sorted_chefs)-1):
+		for i in range(len(self.sorted_chefs)-1):	#-1 Porque como en cada iteración comprobamos tambien el siguiente
+													#hemos de calcular hasta el penúltimo.
 			if self.sorted_chefs[i].get_score() < self.sorted_chefs[i+1].get_score():
 				return False
 
@@ -191,9 +191,8 @@ class Chefs:
 		"""
 		chefs_str = ""
 		for chef in self.get_ids():
-			chefs_str+= self.chefs[chef].__str__()
+			chefs_str+= str(self.chefs[chef])
 			chefs_str+= "\n"
-
 		return chefs_str
 
 	def __len__(self):
@@ -275,7 +274,7 @@ class Recipe:
 		Prints the recipe information sorted by data.
 		:return: The recipe in string format.
 		"""
-		rec_str = "ID: %s; " % (str(self.id))
+		rec_str = "-ID: %s; " % (str(self.id))
 		rec_str += "NAME: %s; " % (self.name)
 		rec_str += "CHEF ID: %s; " % (self.chef_id)
 		rec_str += "SCORE: %s" % (self.score)
@@ -452,7 +451,7 @@ class Review:
 		Prints by screen the sorted information of a review
 		:return: The review in string format.
 		"""
-		review_str = "ID: %s; " % (str(self.id))
+		review_str = "-ID: %s; " % (str(self.id))
 		review_str += "REVIEW: %s; " % (self.review)
 		review_str += "RECIPE ID: %s; " % (self.recipe_id)
 		review_str += "SCORE: %s" % (self.score)
@@ -863,6 +862,12 @@ class TopChef:
 		"""
 		for chef in chefs:
 			print(chef)
+			for recipe in self.recipes.sorted_recipes:
+				if recipe.chef_id == chef.id:
+					print("\t"+str(recipe))
+					for review in self.reviews.sorted_reviews:
+						if review.recipe_id == recipe.id:
+							print("\t\t"+str(review))
 
 	def show_recipes(self, recipes):
 		"""
@@ -870,7 +875,10 @@ class TopChef:
 		:param recipes: Lista de objetos de recipes.
 		"""
 		for recipe in recipes:
-			print(recipe)
+			print(str(recipe))
+			for review in self.reviews.sorted_reviews:
+				if review.recipe_id == recipe.id:
+					print("\t\t"+str(review))
 
 	def show_reviews(self, reviews):
 		"""
