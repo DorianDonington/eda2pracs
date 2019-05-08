@@ -712,7 +712,7 @@ class TopChef:
 					word_score = word_dict.get_value(word)
 					suma += word_score
 
-			review.set_score(round(suma,2))
+			review.set_score(round(suma,1))
 
 		self.normalize_reviews_scores()
 
@@ -727,7 +727,7 @@ class TopChef:
 		for review_id in self.reviews.get_ids():
 			review = self.reviews.get_review(review_id)
 			review_score = review.get_score()
-			review.set_score(round((review_score-min_review)/(max_review-min_review),2))
+			review.set_score(round((review_score-min_review)/(max_review-min_review),1))
 
 	def compute_recipes_score(self):
 		"""
@@ -748,7 +748,7 @@ class TopChef:
 			recipe = self.recipes.get_recipe(rec_id)
 
 			if recipe.get_number_review() !=0:
-				media = round(recipe.get_score()/recipe.get_number_review(),2)
+				media = round(recipe.get_score()/recipe.get_number_review(),1)
 				recipe.set_score(media)
 				self.scores.append(media)
 
@@ -765,7 +765,7 @@ class TopChef:
 		for rec_id in self.recipes.get_ids():
 			recipe = self.recipes.get_recipe(rec_id)
 			rec_score = recipe.get_score()
-			recipe.set_score(round((rec_score-min_review)/(max_review-min_review),2))
+			recipe.set_score(round((rec_score-min_review)/(max_review-min_review),1))
 
 	def compute_chefs_score(self):
 		"""
@@ -785,7 +785,7 @@ class TopChef:
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
 			if chef.get_number_recipe() !=0:
-				media = round(chef.get_score()/chef.get_number_recipe(),2)
+				media = round(chef.get_score()/chef.get_number_recipe(),1)
 
 
 				chef.set_score(media)
@@ -804,7 +804,7 @@ class TopChef:
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
 			chef_score = chef.get_score()
-			chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),2))
+			chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),1))
 
 
 	def sort_structures(self):
