@@ -810,7 +810,8 @@ class TopChef:
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
 			chef_score = chef.get_score()
-			chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),1))
+			nota = round((chef_score-min_chef)/(max_chef-min_chef),1)
+			chef.set_score(nota)
 
 
 	def sort_structures(self):
@@ -875,6 +876,7 @@ class TopChef:
 					for review in self.get_top_n_reviews(len(self.reviews)):
 						if review.recipe_id == recipe.id:
 							print("\t\t{}".format(review))
+			print("\n", end="")
 
 	def show_recipes(self, recipes):
 		"""
@@ -882,10 +884,11 @@ class TopChef:
 		:param recipes: Lista de objetos de recipes.
 		"""
 		for recipe in recipes:
-			print(str(recipe))
+			print(recipe)
 			for review in self.get_top_n_reviews(len(self.reviews)):
 				if review.recipe_id == recipe.id:
 					print("\t{}".format(review))
+			print("\n", end="")
 
 	def show_reviews(self, reviews):
 		"""
