@@ -728,7 +728,7 @@ class TopChef:
 					word_score = word_dict.get_value(word)
 					suma += word_score
 
-			review.set_score(round(suma,1))
+			review.set_score(suma)
 
 		self.normalize_reviews_scores()
 
@@ -764,7 +764,7 @@ class TopChef:
 			recipe = self.recipes.get_recipe(rec_id)
 
 			if recipe.get_number_review() !=0:
-				media = round(recipe.get_score()/recipe.get_number_review(),1)
+				media = recipe.get_score()/recipe.get_number_review()
 				self.scores.append(media)
 				recipe.set_score(media)
 
@@ -802,7 +802,7 @@ class TopChef:
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
 			if chef.get_number_recipe() !=0:
-				media = round(chef.get_score()/chef.get_number_recipe(),1)
+				media = chef.get_score()/chef.get_number_recipe()
 				chef.set_score(media)
 				self.scores.append(media)
 
