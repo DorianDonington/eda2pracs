@@ -641,6 +641,7 @@ class TopChef:
 				if not CONTROL and CHEF in line:
 					CONTROL = True #Controlamos si estamos en el fichero correcto o no
 
+				# Generar Chefs
 				if CHEF in line and CONTROL:
 					stripped = line.strip() #Eliminamos el \n del final de la línea
 					chef_data = stripped.split(TAB) #Separamos el texto por \t
@@ -649,16 +650,28 @@ class TopChef:
 					current_chef_id = self.add_chef(chef_name,chef_restaurant)
 					continue #Siguiente linea!
 
+				# Generar Recipes
 				elif COURSE in line and CONTROL:
 					stripped = line.strip() #Eliminamos el \n
 					recipe = stripped.replace(COURSE+TAB,"") #Eliminamos la palabra COURSE para quedarnos con el resto
 					current_recipe_id = self.add_recipe(current_chef_id,recipe)
+					# Incrementa cantidad de recipe que contiene cada chef.
+					new_recipe = self.recipes.get_recipe(current_recipe_id)
+					chef_id = new_recipe.get_chef_id()
+					new_chef = self.chefs.get_chef(chef_id)
+					new_chef.add_number_recipe()
 					continue
 
+				# Generar Reviwes
 				elif CONTROL:
 					line = line.strip() #Eliminamos \n
 					review = line.translate(str.maketrans('', '', string.punctuation)).lower() #Eliminamos símbolos de puntuación y ponemos todos en minus
-					self.add_review(current_recipe_id, review)
+					review_id = self.add_review(current_recipe_id, review)
+					# Incrementa cantidad de review que contiene cada recipe.
+					new_review = self.reviews.get_review(review_id)
+					recipe_id = new_review.get_recipe_id()
+					new_recipe = self.recipes.get_recipe(recipe_id)
+					new_recipe.add_number_review()
 
 				else:
 					self.clear() #Errores? Borramos todos
@@ -758,7 +771,6 @@ class TopChef:
 			recipe_id = review.get_recipe_id()
 			recipe = self.recipes.get_recipe(recipe_id)
 			recipe.set_score(recipe.get_score()+review.get_score())
-			recipe.add_number_review()
 
 		for rec_id in self.recipes.get_ids():
 			recipe = self.recipes.get_recipe(rec_id)
@@ -797,7 +809,6 @@ class TopChef:
 			chef_id = recipe.get_chef_id()
 			chef = self.chefs.get_chef(chef_id)
 			chef.set_score(chef.get_score()+recipe.get_score())
-			chef.add_number_recipe()
 
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
