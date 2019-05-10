@@ -167,7 +167,7 @@ class Chefs:
 
 		# Control de error: Si la lista ya esta ordenada, Para evitar hacer pasos inecesarios.
 		if self.is_sorted():
-			raise TopChefException("Chefs it's sorted.")
+			raise TopChefException("Chefs are sorted already!.")
 
 		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
@@ -372,7 +372,7 @@ class Recipes:
 				self.sorted_recipes.append(recipe_temp)
 
 		if self.is_sorted():
-			raise TopChefException("Recipe rt's sorted. ")
+			raise TopChefException("Recipes sorted already!")
 		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
@@ -576,7 +576,7 @@ class Reviews:
 				self.sorted_reviews.append(review_temp)
 
 		if self.is_sorted():
-			raise TopChefException("Reviews it's sorted. ")
+			raise TopChefException("Reviews are sorted already! ")
 		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
