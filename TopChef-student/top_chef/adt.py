@@ -376,7 +376,7 @@ class Recipes:
 		# una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
 		# Si elemento no es mayor, elemento + 1, y entra siguiente vuelta de bucle
 		# hasta termina recorrer toda la lista, i = len(lista).
-		i = 1
+		i = 1 
 		while i < len(self.sorted_recipes):
 			j = i
 			while j > 0 and self.sorted_recipes[j].get_score() > self.sorted_recipes[j - 1].get_score():
@@ -627,7 +627,8 @@ class TopChef:
 		self.chefs = Chefs()
 		self.recipes = Recipes()
 		self.reviews = Reviews()
-		self.scores = []
+		self.recipes_scores = []
+		self.chefs_scores = []
 
 	def load_data(self, path):
 		"""
@@ -768,7 +769,6 @@ class TopChef:
 		:param word_dict: The word dictionary opened by the module word_dictionary.py.
 		:return: The normalized score.
 		"""
-		self.scores = []
 
 		for rev_id in self.reviews.get_ids():
 			review = self.reviews.get_review(rev_id)
@@ -781,7 +781,7 @@ class TopChef:
 
 			if recipe.get_number_review() !=0:
 				media = recipe.get_score()/recipe.get_number_review()
-				self.scores.append(media)
+				self.recipes_scores.append(media)
 				recipe.set_score(media)
 
 		self.normalize_recipes_scores()
@@ -791,9 +791,9 @@ class TopChef:
 		Normalizes the recipes scores.
 		:return: The normalized recipe scores.
 		"""
-		max_review = max(self.scores)
-		min_review = min(self.scores)
-
+		max_review = max(self.recipes_scores)
+		min_review = min(self.recipes_scores)
+		
 		for rec_id in self.recipes.get_ids():
 			recipe = self.recipes.get_recipe(rec_id)
 			if recipe.get_number_review() != 0:
@@ -806,8 +806,7 @@ class TopChef:
 		Computes the scores for  the chefs.
 		:return: The normalized score.
 		"""
-		self.scores = []
-
+		
 		for rec_id in self.recipes.get_ids():
 			recipe = self.recipes.get_recipe(rec_id)
 			chef_id = recipe.get_chef_id()
@@ -819,7 +818,7 @@ class TopChef:
 			if chef.get_number_recipe() !=0:
 				media = chef.get_score()/chef.get_number_recipe()
 				chef.set_score(media)
-				self.scores.append(media)
+				self.chefs_scores.append(media)
 
 		self.normalize_chefs_scores()
 
@@ -828,8 +827,8 @@ class TopChef:
 		Normalize the chefs scores.
 		:return: The normalized score.
 		"""
-		max_chef = max(self.scores)
-		min_chef = min(self.scores)
+		max_chef = max(self.chefs_scores)
+		min_chef = min(self.chefs_scores)
 
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
