@@ -161,13 +161,15 @@ class Chefs:
 
 		for chef in self.chefs:
 			chef_temp = self.get_chef(chef)
+			# Para evitar cuando usuario carga mas de una vez el fichero de word.
 			if chef_temp not in self.sorted_chefs:
 				self.sorted_chefs.append(chef_temp)
 
+		# Control de error: Si la lista ya esta ordenada, Para evitar hacer pasos inecesarios.
 		if self.is_sorted():
-			raise TopChefException("It's sorted.")
+			raise TopChefException("Chefs it's sorted.")
 
-		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
+		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
 		# una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
@@ -365,12 +367,13 @@ class Recipes:
 		# Porque diccionario es objeto sin ordenes.
 		for recipe in self.recipes:
 			recipe_temp = self.get_recipe(recipe)
+			# Para evitar cuando usuario carga mas de una vez el fichero de word.
 			if recipe not in self.sorted_recipes:
 				self.sorted_recipes.append(recipe_temp)
 
 		if self.is_sorted():
-			raise TopChefException("It's sorted. ")
-		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
+			raise TopChefException("Recipe rt's sorted. ")
+		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
 		# una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
@@ -568,12 +571,13 @@ class Reviews:
 		# Porque diccionario es objeto sin ordenes.
 		for review in self.reviews:
 			review_temp = self.get_review(review)
+			# Para evitar cuando usuario carga mas de una vez el fichero de word.
 			if review_temp not in self.sorted_reviews:
 				self.sorted_reviews.append(review_temp)
 
 		if self.is_sorted():
-			raise TopChefException("It's sorted. ")
-		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
+			raise TopChefException("Reviews it's sorted. ")
+		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
 		# una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
