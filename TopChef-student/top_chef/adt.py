@@ -114,7 +114,7 @@ class Chefs:
 		"""
 		for chef in self.chefs: #Solo controlamos el caso mismo chef y mismo restaurante porque un chef puede tener 
 			#dos restaurantes y dos chefs pueden compartir mismo restaurante
-			if chef.get_restaurant() == restaurant and chef.get_name() == name:
+			if self.chefs[chef].get_restaurant() == restaurant and chef.get_name() == name:
 				raise TopChefException("You have a repeated chef in your data file!")
 		# Genera un nueva instancia chef
 		new_Chef = Chef(self.next+1, name, restaurant)
