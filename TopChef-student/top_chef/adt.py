@@ -77,7 +77,7 @@ class Chef:
 		chef_str = "-ID: %s; " % (str(self.get_id()))
 		chef_str += "NAME: %s; " % (self.get_name())
 		chef_str += "RESTAURANT: %s; " % (self.get_restaurant())
-		chef_str += "SCORE: %s" % (self.get_score())
+		chef_str += "SCORE: %s" % (round(self.get_score(),1))
 		return chef_str
 
 # Structure to hold all chefs
@@ -286,7 +286,7 @@ class Recipe:
 		rec_str = "-ID: %s; " % (str(self.id))
 		rec_str += "NAME: %s; " % (self.name)
 		rec_str += "CHEF ID: %s; " % (self.chef_id)
-		rec_str += "SCORE: %s" % (self.score)
+		rec_str += "SCORE: %s" % (round(self.get_score(), 1))
 		return rec_str
 
 # Structure to hold the recipes
@@ -466,7 +466,7 @@ class Review:
 		review_str = "-ID: %s; " % (str(self.id))
 		review_str += "REVIEW: %s; " % (self.review)
 		review_str += "RECIPE ID: %s; " % (self.recipe_id)
-		review_str += "SCORE: %s" % (self.score)
+		review_str += "SCORE: %s" % (round(self.get_score(), 1))
 		return review_str
 
 # Structure to hold the reviews
@@ -760,7 +760,7 @@ class TopChef:
 		for review_id in self.reviews.get_ids():
 			review = self.reviews.get_review(review_id)
 			review_score = review.get_score()
-			review.set_score(round((review_score-min_review)/(max_review-min_review),1))
+			review.set_score((review_score-min_review)/(max_review-min_review))
 
 	def compute_recipes_score(self):
 		"""
@@ -798,7 +798,7 @@ class TopChef:
 			recipe = self.recipes.get_recipe(rec_id)
 			if recipe.get_number_review() != 0:
 				rec_score = recipe.get_score()
-				recipe.set_score(round((rec_score-min_review)/(max_review-min_review),1))
+				recipe.set_score((rec_score-min_review)/(max_review-min_review))
 
 
 	def compute_chefs_score(self):
@@ -835,7 +835,7 @@ class TopChef:
 			chef = self.chefs.get_chef(chef_id)
 			if chef.get_number_recipe() != 0:
 				chef_score = chef.get_score()
-				chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),1))
+				chef.set_score((chef_score-min_chef)/(max_chef-min_chef))
 
 
 	def sort_structures(self):
