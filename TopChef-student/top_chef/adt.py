@@ -634,7 +634,7 @@ class TopChef:
 		Funcion que se encarga de generar informaciones de chefs.
 		:param path: Direccion de archivo de chefs
 		"""
-
+		self.clear() #Limpiamos el data antes de empezar con un load word
 		# Definir palabras clave.
 		CHEF = "CHEF"
 		COURSE = "COURSE"
