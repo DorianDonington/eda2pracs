@@ -885,7 +885,7 @@ class TopChef:
 
 	def show_chefs(self, chefs):
 		"""
-		Mostrar por pantalla lista de N chefs
+		Mostrar por pantalla lista de N chefs.
 		:param recipes: Lista de objetos de chefs.
 		"""
 		for chef in chefs:
