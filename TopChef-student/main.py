@@ -86,8 +86,6 @@ def add_word_dictionary(top_chef):
         else:
             print("Invalid option, try again.")
 
-
-
 def show_topn_chefs(top_chef):
     option = 0
     cancel = False
