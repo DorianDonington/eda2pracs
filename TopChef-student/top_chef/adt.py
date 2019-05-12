@@ -2,7 +2,7 @@ import string
 
 class TopChefException(Exception):
 	pass
-	
+
 #  Structure to hold a chef
 class Chef:
 	def __init__(self, chef_id=None, chef_name=None, chef_restaurant=None):
@@ -226,7 +226,7 @@ class Recipe:
 		self.name = rec_name
 		self.chef_id = rec_chef_id
 		self.score = 0.0
-		self.number_review = 0
+		self.number_review = 0 #Number of reviews in each recipe
 
 	def get_id(self):
 		"""
@@ -354,7 +354,7 @@ class Recipes:
 			return False
 
 		for i in range(len(self.sorted_recipes)-1):
-			if self.sorted_recipes[i].get_score() < self.sorted_recipes[i+1].get_score():
+			if self.sorted_recipes[i].get_score() < self.sorted_recipes[i+1].get_score(): #Mira los elementos a pares i comprueba que estén ordenados
 				return False
 
 		return True
@@ -557,7 +557,7 @@ class Reviews:
 			return False
 
 		for i in range(len(self.sorted_reviews)-1):
-			if self.sorted_reviews[i].get_score() < self.sorted_reviews[i+1].get_score():
+			if self.sorted_reviews[i].get_score() < self.sorted_reviews[i+1].get_score(): #Mira los elementos a pares i comprueba que estén ordenados
 				return False
 
 		return True
@@ -665,10 +665,8 @@ class TopChef:
 					recipe = stripped.replace(COURSE+TAB,"") #Eliminamos la palabra COURSE para quedarnos con el resto
 					current_recipe_id = self.add_recipe(current_chef_id,recipe)
 					# Incrementa cantidad de recipe que contiene cada chef.
-					new_recipe = self.recipes.get_recipe(current_recipe_id)
-					chef_id = new_recipe.get_chef_id()
-					new_chef = self.chefs.get_chef(chef_id)
-					new_chef.add_number_recipe()
+					new_chef = self.chefs.get_chef(current_chef_id)
+					new_chef.add_number_recipe() 
 					continue
 
 				# Generar Reviwes
@@ -677,9 +675,7 @@ class TopChef:
 					review = line.translate(str.maketrans('', '', string.punctuation)).lower() #Eliminamos símbolos de puntuación y ponemos todos en minus
 					review_id = self.add_review(current_recipe_id, review)
 					# Incrementa cantidad de review que contiene cada recipe.
-					new_review = self.reviews.get_review(review_id)
-					recipe_id = new_review.get_recipe_id()
-					new_recipe = self.recipes.get_recipe(recipe_id)
+					new_recipe = self.recipes.get_recipe(current_recipe_id)
 					new_recipe.add_number_review()
 
 				else:
