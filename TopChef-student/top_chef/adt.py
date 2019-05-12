@@ -891,6 +891,18 @@ class TopChef:
 		Mostrar por pantalla lista de N chefs
 		:param recipes: Lista de objetos de chefs.
 		"""
+		# Para respetar al usuario, imprementamos head de mostreo de chefs.
+		if len(chefs) == len(self.chefs):
+			size = "ALL"
+		else:
+			size = "TOP " + str((len(chefs)))
+
+		head = "-" * 50 + "\n"
+		head += "{} Chefs \n".format(size)
+		head += "-" * 50 + "\n"
+		print(head)
+
+		# Bucle para mostrar todos los chefs y su propia recipe con reviews.
 		for chef in chefs:
 			print(chef)
 			for recipe_id in self.recipes.get_ids():
@@ -908,6 +920,18 @@ class TopChef:
 		Mostrar por pantalla lista de N recipes
 		:param recipes: Lista de objetos de recipes.
 		"""
+		# Para respetar al usuario, imprementamos head de mostreo de recipes.
+		if len(recipes) == len(self.recipes):
+			size = "ALL"
+		else:
+			size = "TOP " + str((len(recipes)))
+
+		head = "-" * 50 + "\n"
+		head += "{} Recipes \n".format(size)
+		head += "-" * 50 + "\n"
+		print(head)
+
+		# Bucle para mostrar todos los recipe con su propio reviews.
 		for recipe in recipes:
 			print(recipe)
 			for review in self.get_top_n_reviews(len(self.reviews)):
@@ -920,5 +944,17 @@ class TopChef:
 		Mostrar por pantalla lista de N reviews.
 		:param reviews: Lista de objetos de reviews.
 		"""
+		# Para respetar al usuario, imprementamos head de mostreo de reviews.
+		if len(reviews) == len(self.reviews):
+			size = "ALL"
+		else:
+			size = "TOP " + str((len(reviews)))
+
+		head = "-" * 50 + "\n"
+		head += "{} Reviews \n".format(size)
+		head += "-" * 50 + "\n"
+		print(head)
+
+		# Bucle para mostrar todos los reviews.
 		for review in reviews:
 			print(review)
