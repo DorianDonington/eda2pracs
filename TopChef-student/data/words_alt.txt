@@ -1,5 +1,5 @@
 WORD	VALUE
-accessible	1000.35
+accessible	0.35
 alright	0.1
 awful	-0.89
 bad	-0.5

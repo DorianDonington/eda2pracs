@@ -6,7 +6,7 @@ class WordDictionary:
 
     def __init__(self):
         """
-        Arranncamos un diccionario para las palabras, que irán de key, y sus valores numéricos
+        Arrancamos un diccionario para las palabras, que irán de key, y sus valores numéricos
         """
         self.words = {}
 

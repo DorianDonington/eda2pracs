@@ -16,7 +16,7 @@ class Chef:
 		self.name = chef_name
 		self.restaurant = chef_restaurant
 		self.score = 0.0
-		self.number_recipe = 0
+		self.number_recipe = 0 #Número de reviews que tiene le dhef
 
 	def get_id(self):
 		"""
@@ -77,7 +77,7 @@ class Chef:
 		chef_str = "-ID: %s; " % (str(self.get_id()))
 		chef_str += "NAME: %s; " % (self.get_name())
 		chef_str += "RESTAURANT: %s; " % (self.get_restaurant())
-		chef_str += "SCORE: %s" % (self.get_score())
+		chef_str += "SCORE: %s" % (round(self.get_score(),1))
 		return chef_str
 
 # Structure to hold all chefs
@@ -112,6 +112,10 @@ class Chefs:
 		:param restaurant: nombre de restaurante
 		:return: id de nuevo chef generado.
 		"""
+		for chef in self.chefs: #Solo controlamos el caso mismo chef y mismo restaurante porque un chef puede tener 
+			#dos restaurantes y dos chefs pueden compartir mismo restaurante
+			if self.chefs[chef].get_restaurant() == restaurant and chef.get_name() == name:
+				raise TopChefException("You have a repeated chef in your data file!")
 		# Genera un nueva instancia chef
 		new_Chef = Chef(self.next+1, name, restaurant)
 		# Consultar id de nuevo chef
@@ -157,13 +161,15 @@ class Chefs:
 
 		for chef in self.chefs:
 			chef_temp = self.get_chef(chef)
+			# Para evitar cuando usuario carga mas de una vez el fichero de word.
 			if chef_temp not in self.sorted_chefs:
 				self.sorted_chefs.append(chef_temp)
 
+		# Control de error: Si la lista ya esta ordenada, Para evitar hacer pasos inecesarios.
 		if self.is_sorted():
-			raise TopChefException("It's sorted.")
+			raise TopChefException("Chefs are sorted already!.")
 
-		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
+		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
 		# una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
@@ -220,7 +226,7 @@ class Recipe:
 		self.name = rec_name
 		self.chef_id = rec_chef_id
 		self.score = 0.0
-		self.number_review = 0
+		self.number_review = 0 #Number of reviews in each recipe
 
 	def get_id(self):
 		"""
@@ -282,7 +288,7 @@ class Recipe:
 		rec_str = "-ID: %s; " % (str(self.id))
 		rec_str += "NAME: %s; " % (self.name)
 		rec_str += "CHEF ID: %s; " % (self.chef_id)
-		rec_str += "SCORE: %s" % (self.score)
+		rec_str += "SCORE: %s" % (round(self.get_score(), 1))
 		return rec_str
 
 # Structure to hold the recipes
@@ -348,7 +354,7 @@ class Recipes:
 			return False
 
 		for i in range(len(self.sorted_recipes)-1):
-			if self.sorted_recipes[i].get_score() < self.sorted_recipes[i+1].get_score():
+			if self.sorted_recipes[i].get_score() < self.sorted_recipes[i+1].get_score(): #Mira los elementos a pares i comprueba que estén ordenados
 				return False
 
 		return True
@@ -361,18 +367,19 @@ class Recipes:
 		# Porque diccionario es objeto sin ordenes.
 		for recipe in self.recipes:
 			recipe_temp = self.get_recipe(recipe)
+			# Para evitar cuando usuario carga mas de una vez el fichero de word.
 			if recipe not in self.sorted_recipes:
 				self.sorted_recipes.append(recipe_temp)
 
 		if self.is_sorted():
-			raise TopChefException("It's sorted. ")
-		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
+			raise TopChefException("Recipes sorted already!")
+		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
 		# una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
 		# Si elemento no es mayor, elemento + 1, y entra siguiente vuelta de bucle
 		# hasta termina recorrer toda la lista, i = len(lista).
-		i = 1
+		i = 1 
 		while i < len(self.sorted_recipes):
 			j = i
 			while j > 0 and self.sorted_recipes[j].get_score() > self.sorted_recipes[j - 1].get_score():
@@ -462,7 +469,7 @@ class Review:
 		review_str = "-ID: %s; " % (str(self.id))
 		review_str += "REVIEW: %s; " % (self.review)
 		review_str += "RECIPE ID: %s; " % (self.recipe_id)
-		review_str += "SCORE: %s" % (self.score)
+		review_str += "SCORE: %s" % (round(self.get_score(), 1))
 		return review_str
 
 # Structure to hold the reviews
@@ -521,7 +528,7 @@ class Reviews:
 	def get_scores(self):
 		"""
 		Creates a new list that saves every score, so we can do a max and a min in every score.
-		:return:
+		:return: the array of scores
 		"""
 		scores =[]
 		for rev_id in self.get_ids():
@@ -550,7 +557,7 @@ class Reviews:
 			return False
 
 		for i in range(len(self.sorted_reviews)-1):
-			if self.sorted_reviews[i].get_score() < self.sorted_reviews[i+1].get_score():
+			if self.sorted_reviews[i].get_score() < self.sorted_reviews[i+1].get_score(): #Mira los elementos a pares i comprueba que estén ordenados
 				return False
 
 		return True
@@ -564,12 +571,13 @@ class Reviews:
 		# Porque diccionario es objeto sin ordenes.
 		for review in self.reviews:
 			review_temp = self.get_review(review)
+			# Para evitar cuando usuario carga mas de una vez el fichero de word.
 			if review_temp not in self.sorted_reviews:
 				self.sorted_reviews.append(review_temp)
 
 		if self.is_sorted():
-			raise TopChefException("It's sorted. ")
-		# Utilizando metodo de ordenar ascendente por insercion para ordenar.
+			raise TopChefException("Reviews are sorted already! ")
+		# Utilizando metodo de ordenar descendente por insercion para ordenar.
 		# Va comparando elemento con su elemento anterior,
 		# Si elemento es mayor que elemento anterior, cambio de posicion.
 		# una vez cambiado de posicion, comprueba con el elemento anterior - 1. Hasta que anterior - 1 sea mayor que elemento que estamos recorriendo.
@@ -623,14 +631,15 @@ class TopChef:
 		self.chefs = Chefs()
 		self.recipes = Recipes()
 		self.reviews = Reviews()
-		self.scores = []
+		self.recipes_scores = []
+		self.chefs_scores = []
 
 	def load_data(self, path):
 		"""
 		Funcion que se encarga de generar informaciones de chefs.
 		:param path: Direccion de archivo de chefs
 		"""
-
+		self.clear() #Limpiamos el data antes de empezar con un load word
 		# Definir palabras clave.
 		CHEF = "CHEF"
 		COURSE = "COURSE"
@@ -656,10 +665,8 @@ class TopChef:
 					recipe = stripped.replace(COURSE+TAB,"") #Eliminamos la palabra COURSE para quedarnos con el resto
 					current_recipe_id = self.add_recipe(current_chef_id,recipe)
 					# Incrementa cantidad de recipe que contiene cada chef.
-					new_recipe = self.recipes.get_recipe(current_recipe_id)
-					chef_id = new_recipe.get_chef_id()
-					new_chef = self.chefs.get_chef(chef_id)
-					new_chef.add_number_recipe()
+					new_chef = self.chefs.get_chef(current_chef_id)
+					new_chef.add_number_recipe() 
 					continue
 
 				# Generar Reviwes
@@ -668,9 +675,7 @@ class TopChef:
 					review = line.translate(str.maketrans('', '', string.punctuation)).lower() #Eliminamos símbolos de puntuación y ponemos todos en minus
 					review_id = self.add_review(current_recipe_id, review)
 					# Incrementa cantidad de review que contiene cada recipe.
-					new_review = self.reviews.get_review(review_id)
-					recipe_id = new_review.get_recipe_id()
-					new_recipe = self.recipes.get_recipe(recipe_id)
+					new_recipe = self.recipes.get_recipe(current_recipe_id)
 					new_recipe.add_number_review()
 
 				else:
@@ -756,7 +761,7 @@ class TopChef:
 		for review_id in self.reviews.get_ids():
 			review = self.reviews.get_review(review_id)
 			review_score = review.get_score()
-			review.set_score(round((review_score-min_review)/(max_review-min_review),1))
+			review.set_score((review_score-min_review)/(max_review-min_review))
 
 	def compute_recipes_score(self):
 		"""
@@ -764,7 +769,6 @@ class TopChef:
 		:param word_dict: The word dictionary opened by the module word_dictionary.py.
 		:return: The normalized score.
 		"""
-		self.scores = []
 
 		for rev_id in self.reviews.get_ids():
 			review = self.reviews.get_review(rev_id)
@@ -777,7 +781,7 @@ class TopChef:
 
 			if recipe.get_number_review() !=0:
 				media = recipe.get_score()/recipe.get_number_review()
-				self.scores.append(media)
+				self.recipes_scores.append(media)
 				recipe.set_score(media)
 
 		self.normalize_recipes_scores()
@@ -787,14 +791,14 @@ class TopChef:
 		Normalizes the recipes scores.
 		:return: The normalized recipe scores.
 		"""
-		max_review = max(self.scores)
-		min_review = min(self.scores)
-
+		max_review = max(self.recipes_scores)
+		min_review = min(self.recipes_scores)
+		
 		for rec_id in self.recipes.get_ids():
 			recipe = self.recipes.get_recipe(rec_id)
 			if recipe.get_number_review() != 0:
 				rec_score = recipe.get_score()
-				recipe.set_score(round((rec_score-min_review)/(max_review-min_review),1))
+				recipe.set_score((rec_score-min_review)/(max_review-min_review))
 
 
 	def compute_chefs_score(self):
@@ -802,8 +806,7 @@ class TopChef:
 		Computes the scores for  the chefs.
 		:return: The normalized score.
 		"""
-		self.scores = []
-
+		
 		for rec_id in self.recipes.get_ids():
 			recipe = self.recipes.get_recipe(rec_id)
 			chef_id = recipe.get_chef_id()
@@ -815,7 +818,7 @@ class TopChef:
 			if chef.get_number_recipe() !=0:
 				media = chef.get_score()/chef.get_number_recipe()
 				chef.set_score(media)
-				self.scores.append(media)
+				self.chefs_scores.append(media)
 
 		self.normalize_chefs_scores()
 
@@ -824,14 +827,14 @@ class TopChef:
 		Normalize the chefs scores.
 		:return: The normalized score.
 		"""
-		max_chef = max(self.scores)
-		min_chef = min(self.scores)
+		max_chef = max(self.chefs_scores)
+		min_chef = min(self.chefs_scores)
 
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
 			if chef.get_number_recipe() != 0:
 				chef_score = chef.get_score()
-				chef.set_score(round((chef_score-min_chef)/(max_chef-min_chef),1))
+				chef.set_score((chef_score-min_chef)/(max_chef-min_chef))
 
 
 	def sort_structures(self):
@@ -888,6 +891,18 @@ class TopChef:
 		Mostrar por pantalla lista de N chefs.
 		:param recipes: Lista de objetos de chefs.
 		"""
+		# Para respetar al usuario, imprementamos head de mostreo de chefs.
+		if len(chefs) == len(self.chefs):
+			size = "ALL"
+		else:
+			size = "TOP " + str((len(chefs)))
+
+		head = "-" * 50 + "\n"
+		head += "{} Chefs \n".format(size)
+		head += "-" * 50 + "\n"
+		print(head)
+
+		# Bucle para mostrar todos los chefs y su propia recipe con reviews.
 		for chef in chefs:
 			print(chef)
 			for recipe_id in self.recipes.get_ids():
@@ -905,6 +920,18 @@ class TopChef:
 		Mostrar por pantalla lista de N recipes
 		:param recipes: Lista de objetos de recipes.
 		"""
+		# Para respetar al usuario, imprementamos head de mostreo de recipes.
+		if len(recipes) == len(self.recipes):
+			size = "ALL"
+		else:
+			size = "TOP " + str((len(recipes)))
+
+		head = "-" * 50 + "\n"
+		head += "{} Recipes \n".format(size)
+		head += "-" * 50 + "\n"
+		print(head)
+
+		# Bucle para mostrar todos los recipe con su propio reviews.
 		for recipe in recipes:
 			print(recipe)
 			for review in self.get_top_n_reviews(len(self.reviews)):
@@ -917,5 +944,17 @@ class TopChef:
 		Mostrar por pantalla lista de N reviews.
 		:param reviews: Lista de objetos de reviews.
 		"""
+		# Para respetar al usuario, imprementamos head de mostreo de reviews.
+		if len(reviews) == len(self.reviews):
+			size = "ALL"
+		else:
+			size = "TOP " + str((len(reviews)))
+
+		head = "-" * 50 + "\n"
+		head += "{} Reviews \n".format(size)
+		head += "-" * 50 + "\n"
+		print(head)
+
+		# Bucle para mostrar todos los reviews.
 		for review in reviews:
 			print(review)
