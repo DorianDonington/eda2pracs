@@ -27,8 +27,7 @@ class Chef:
 	def add_score(self, score):
 		"""
 		Adds the score to the self.score initializated.
-		:param score: The normalized score.
-		:return: The score addition.
+		:param score: number score.
 		"""
 		self.score += score
 
@@ -37,6 +36,7 @@ class Chef:
 		:return: Returns the chef's name.
 		"""
 		return self.name
+
 	def add_number_recipe(self):
 		"""
 		Adds another recipe to the recipe count.
@@ -57,7 +57,7 @@ class Chef:
 
 	def get_score(self):
 		"""
-		:return: The sum of the normalized scores.
+		:return: The number of the scores.
 		"""
 		return self.score
 
@@ -65,13 +65,13 @@ class Chef:
 		"""
 		Sets a score to the selected chef.
 		:param score: Score we want to assign.
-		:return: The assigned score.
 		"""
 		self.score = score
 
 	def __str__(self):
 		"""
 		This funtion prints by screen a sorted way to show a chef's information.
+		we round number of the score.
 		:return: The chef information in string format.
 		"""
 		chef_str = "-ID: %s; " % (str(self.get_id()))
@@ -135,6 +135,7 @@ class Chefs:
 		:param id: chef id input by the user.
 		:return: the chef asked for.
 		"""
+		# Control de error: Si existe el chef que existe.
 		if self.exists(id):
 			return self.chefs[id]
 		else:
