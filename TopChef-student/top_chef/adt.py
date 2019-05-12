@@ -460,7 +460,7 @@ class Review:
 
 	def set_score(self, score):
 		"""
-		:return: Sets a score to that review.
+		Sets a score to that review.
 		"""
 		self.score = score
 
@@ -725,7 +725,6 @@ class TopChef:
 		"""
 		Checks for every review inside the word_dict and returns the computed score of all reviews, recipes and chefs.
 		:param word_dict: The word dictionary opened by the module word_dictionary.py.
-		:return: The computed score of reviews, recipes and chefs.
 		"""
 		self.compute_reviews_score(word_dict)
 		self.compute_recipes_score()
@@ -735,7 +734,6 @@ class TopChef:
 		"""
 		Compute the score of the reviews.
 		:param word_dict: The word dictionary opened by the module word_dictionary.py.
-		:return: The normalized score.
 		"""
 		if len(self.chefs)==0:
 			raise TopChefException("No data yet!")
@@ -756,7 +754,6 @@ class TopChef:
 	def normalize_reviews_scores(self):
 		"""
 		Normalizes the reviews score computed.
-		:return: The normalized score.
 		"""
 		max_review = self.reviews.max_score() 
 		min_review = self.reviews.min_score()
@@ -770,7 +767,6 @@ class TopChef:
 		"""
 		Compute the score of the recipes.
 		:param word_dict: The word dictionary opened by the module word_dictionary.py.
-		:return: The normalized score.
 		"""
 
 		for rev_id in self.reviews.get_ids(): #Cojemos todos los reviews
@@ -791,7 +787,6 @@ class TopChef:
 	def normalize_recipes_scores(self):
 		"""
 		Normalizes the recipes scores.
-		:return: The normalized recipe scores.
 		"""
 		max_review = max(self.recipes_scores)
 		min_review = min(self.recipes_scores)
@@ -806,7 +801,6 @@ class TopChef:
 	def compute_chefs_score(self):
 		"""
 		Computes the scores for  the chefs.
-		:return: The normalized score.
 		"""
 		
 		for rec_id in self.recipes.get_ids():  #Cojemos todos los recipes
@@ -827,7 +821,6 @@ class TopChef:
 	def normalize_chefs_scores(self):
 		"""
 		Normalize the chefs scores.
-		:return: The normalized score.
 		"""
 		max_chef = max(self.chefs_scores)
 		min_chef = min(self.chefs_scores)
@@ -841,6 +834,7 @@ class TopChef:
 
 	def sort_structures(self):
 		"""
+		Funcion principal de ordenar chefs, recipes, y reviews.
 		"""
 		self.chefs.sort_chefs()
 		self.recipes.sort_recipes()
