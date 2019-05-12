@@ -738,30 +738,30 @@ class TopChef:
 			raise TopChefException("No data yet!")
 
 		for rev_id in self.reviews.get_ids():
-			suma = 0
+			suma = 0 #Contador para ir sumando los scores de las diferentes palabras
 			review = self.reviews.get_review(rev_id)
 			raw_data = review.get_review().split()
 			for word in raw_data:
-				if word_dict.exists(word):
+				if word_dict.exists(word): #Sumamos el score de la palabra a la review
 					word_score = word_dict.get_value(word)
 					suma += word_score
 
-			review.set_score(suma)
+			review.set_score(suma) #Actualizamos score
 
-		self.normalize_reviews_scores()
+		self.normalize_reviews_scores() #Normalizamos
 
 	def normalize_reviews_scores(self):
 		"""
 		Normalizes the reviews score computed.
 		:return: The normalized score.
 		"""
-		max_review = self.reviews.max_score()
+		max_review = self.reviews.max_score() 
 		min_review = self.reviews.min_score()
 
-		for review_id in self.reviews.get_ids():
+		for review_id in self.reviews.get_ids(): #Normalizamos las reviews uno a uno
 			review = self.reviews.get_review(review_id)
 			review_score = review.get_score()
-			review.set_score((review_score-min_review)/(max_review-min_review))
+			review.set_score((review_score-min_review)/(max_review-min_review)) #Fórmula para normalizar
 
 	def compute_recipes_score(self):
 		"""
@@ -770,21 +770,20 @@ class TopChef:
 		:return: The normalized score.
 		"""
 
-		for rev_id in self.reviews.get_ids():
+		for rev_id in self.reviews.get_ids(): #Cojemos todos los reviews
 			review = self.reviews.get_review(rev_id)
 			recipe_id = review.get_recipe_id()
 			recipe = self.recipes.get_recipe(recipe_id)
-			recipe.set_score(recipe.get_score()+review.get_score())
+			recipe.set_score(recipe.get_score()+review.get_score()) #Sumamos todos los scores de sus reviews
 
 		for rec_id in self.recipes.get_ids():
 			recipe = self.recipes.get_recipe(rec_id)
-
-			if recipe.get_number_review() !=0:
+			if recipe.get_number_review() !=0: #Si tenemos reviews dentro de la recipe, calculamos la media dividiendo la score por el número de reviews
 				media = recipe.get_score()/recipe.get_number_review()
 				self.recipes_scores.append(media)
-				recipe.set_score(media)
+				recipe.set_score(media)#Actualizamos nota 
 
-		self.normalize_recipes_scores()
+		self.normalize_recipes_scores() #Normalizamos
 
 	def normalize_recipes_scores(self):
 		"""
@@ -794,7 +793,7 @@ class TopChef:
 		max_review = max(self.recipes_scores)
 		min_review = min(self.recipes_scores)
 		
-		for rec_id in self.recipes.get_ids():
+		for rec_id in self.recipes.get_ids(): #Normalizamos todas las recipes que tengan reviews
 			recipe = self.recipes.get_recipe(rec_id)
 			if recipe.get_number_review() != 0:
 				rec_score = recipe.get_score()
@@ -807,20 +806,20 @@ class TopChef:
 		:return: The normalized score.
 		"""
 		
-		for rec_id in self.recipes.get_ids():
+		for rec_id in self.recipes.get_ids():  #Cojemos todos los recipes
 			recipe = self.recipes.get_recipe(rec_id)
 			chef_id = recipe.get_chef_id()
 			chef = self.chefs.get_chef(chef_id)
-			chef.set_score(chef.get_score()+recipe.get_score())
+			chef.set_score(chef.get_score()+recipe.get_score())#Sumamos todos los scores de sus recipes
 
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
-			if chef.get_number_recipe() !=0:
+			if chef.get_number_recipe() !=0:  #Si tenemos recipes dentro del chef, calculamos la media dividiendo la score por el número de recipes
 				media = chef.get_score()/chef.get_number_recipe()
 				chef.set_score(media)
-				self.chefs_scores.append(media)
+				self.chefs_scores.append(media) #Actualizamos la media
 
-		self.normalize_chefs_scores()
+		self.normalize_chefs_scores() #Normalizamos
 
 	def normalize_chefs_scores(self):
 		"""
@@ -832,7 +831,7 @@ class TopChef:
 
 		for chef_id in self.chefs.get_ids():
 			chef = self.chefs.get_chef(chef_id)
-			if chef.get_number_recipe() != 0:
+			if chef.get_number_recipe() != 0:#Normalizamos todos los chef's que tengan recetas
 				chef_score = chef.get_score()
 				chef.set_score((chef_score-min_chef)/(max_chef-min_chef))
 
