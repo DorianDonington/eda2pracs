@@ -144,6 +144,7 @@ class Chefs:
 	def is_sorted(self):
 		"""
 		Comprobar si estan ordenado lista de recipes.
+		:return: True si ordenado. False si no
 		"""
 		if len(self.sorted_chefs) == 0:
 			return False
