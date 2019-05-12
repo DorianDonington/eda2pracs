@@ -1,7 +1,6 @@
 import string
 
-class TopChefException(Exception):
-	pass
+
 
 #  Structure to hold a chef
 class Chef:
@@ -528,7 +527,7 @@ class Reviews:
 	def get_scores(self):
 		"""
 		Creates a new list that saves every score, so we can do a max and a min in every score.
-		:return:
+		:return: the array of scores
 		"""
 		scores =[]
 		for rev_id in self.get_ids():
